@@ -61,6 +61,12 @@ class WalletData:
 
     @classmethod
     def from_wallet(cls, user: User, wallet_data: dict):
+        """
+        Build walletData from json
+        :param user:
+        :param wallet_data:
+        :return:
+        """
         coin = int(wallet_data["coin"]["coin_num"])
         send_free_time = int(wallet_data["free_time"]["send_freetime"])
         free_time = int(wallet_data["free_time"]["free_time"])
@@ -71,30 +77,58 @@ class WalletData:
 
     @property
     def coin(self):
+        """
+        Get the user's coins
+        :return: The user's coins
+        """
         return self._coin
 
     @property
     def free_time(self):
+        """
+        Get the user's free time
+        :return: The user's free time
+        """
         return self._free_time
 
     @property
     def send_free_time(self):
+        """
+        Get new free time from user
+        :return: New free time from user
+        """
         return self._send_free_time
 
     @property
     def is_play_card(self):
+        """
+        Get whether the user is a play card
+        :return: The user is a play card
+        """
         return self._is_play_card
 
     @property
     def coin_limit(self):
+        """
+        Get coin limit
+        :return: Coin limit
+        """
         return self._coin_limit
 
     @property
     def free_time_limit(self):
+        """
+        Get free time limit
+        :return: Free time limit
+        """
         return self._free_time_limit
 
     @property
     def user(self):
+        """
+        Get the owner of the wallet
+        :return: The owner of the wallet
+        """
         return self._user
 
 
@@ -104,10 +138,18 @@ class SignInResult:
 
     @property
     def wallet_data(self):
+        """
+        Get the wallet data
+        :return: wallet data
+        """
         return self._wallet_data
 
     @property
     def result(self) -> SignInResultTypes:
+        """
+        Get the result of action
+        :return: 0 for success, 1 for signed in, 2 for exceeding the limit, -1 for failure
+        """
         if self._wallet_data.free_time >= self._wallet_data.free_time_limit:
             result = SignInResultTypes.OVER_LIMIT
         elif self._wallet_data.send_free_time == 0:
@@ -120,4 +162,8 @@ class SignInResult:
 
     @property
     def user(self):
+        """
+        Get the user of the action
+        :return: The user of the action
+        """
         return self._wallet_data.user
