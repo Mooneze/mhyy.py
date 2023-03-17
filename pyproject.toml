@@ -1,0 +1,25 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "mhyy.py"
+version = "0.0.1"
+authors = [
+    { name = "GuangChen2333", email = "guangchenworks@outlook.com" },
+]
+description = "Python API for miHoYo Cloud Gaming (Genshin Impact Cloud) sign in fuction"
+readme = "README.md"
+requires-python = ">=3.6"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "License :: OSI Approved :: BSD License",
+    "Operating System :: OS Independent",
+]
+dependencies = [
+    "httpx"
+]
+
+[project.urls]
+"Homepage" = "https://github.com/GuangChen2333/mhyy.py"
+"Bug Tracker" = "https://github.com/GuangChen2333/mhyy.py/issues"
