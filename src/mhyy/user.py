@@ -1,4 +1,5 @@
 from ._types import UserTypes, SignInResultTypes
+import datetime
 
 
 class User:
@@ -130,6 +131,23 @@ class WalletData:
         :return: The owner of the wallet
         """
         return self._user
+
+    def format_free_time(self, __format: str = "%H Hours %M Seconds") -> str:
+        """
+        Get the free time after formatting
+        :return: The free time after formatting
+        """
+        t = datetime.time(self.free_time // 60, self.free_time % 60)
+        return t.strftime(__format)
+
+    def format_coin_time(self, __format: str = "%H Hours %M Seconds") -> str:
+        """
+        Get the coin time after formatting
+        :return: The coin time after formatting
+        """
+        ct = self.coin // 10
+        t = datetime.time(ct // 60, ct % 60)
+        return t.strftime(__format)
 
 
 class SignInResult:

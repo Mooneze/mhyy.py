@@ -5,7 +5,7 @@
 ![Python](https://img.shields.io/pypi/pyversions/mhyy.py?style=flat-square)
 ![STARS](https://img.shields.io/github/stars/GuangChen2333/mhyy.py?style=flat-square).
 
-Python 米哈云游（云原神）签到功能 API
+Python 米哈云游（云原神）签到功能与相关方法的API
 
 ## 快速开始
 
@@ -40,27 +40,33 @@ r = client.sign_in(user)
 print(r.result.name)
 ```
 
-## 关于 SignInResult
+## 文档
 
-SignInResult 是一个**仅可读不可写**的对象
+### 关于 SignInResult
 
-对象属性: 
+SignInResult 是一个只读对象，用于返回签到结果
 
-- `result: SignInResultTypes`
-- `wallet_data: WalletData`
-- `user: User`
+#### 对象属性: 
 
-## 关于 WalletData
+- `result: SignInResultTypes` -> 签到结果
+- `wallet_data: WalletData` -> 你的钱包数据
+- `user: User` -> 所属用户
 
-Wallet Data 是一个**仅可读不可写**的对象
+### 关于 WalletData
 
-对象属性:
+WalletData 是一个只读对象，用于返回你的钱包数据
 
-- `coin: int`
-- `free_time: int`
-- `send_free_time: int`
-- `is_play_card: bool`
-- `coin_limit: int`
-- `free_time_limit: int`
-- `user: User`
+#### 对象属性:
 
+- `coin: int` -> 米云币
+- `free_time: int` -> 免费时长
+- `send_free_time: int` -> 新增的免费时长
+- `is_play_card: bool` -> 是否是畅玩卡
+- `coin_limit: int` -> 米云币上限
+- `free_time_limit: int` -> 免费时长上限
+- `user: User` -> 所属用户
+
+#### 对象方法
+
+- `format_free_time(__format: str) -> str` -> 获取格式化后的免费时间字符串
+- `format_coin_time(__format: str) -> str` -> 获取格式化后的付费时间（米云币时间）字符串
