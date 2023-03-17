@@ -117,3 +117,7 @@ class SignInResult:
         else:
             result = SignInResultTypes.ERROR
         return result
+
+    @property
+    def user(self):
+        return self._wallet_data.user

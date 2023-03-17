@@ -33,17 +33,34 @@ user = User(
     nickname=""  # 这个是便于识别的昵称，选填~
 )
 
-# 执行签到并返回一个 Wallet Data 对象
+# 执行签到并返回一个 SignInResult 对象
 r = client.sign_in(user)
 
-# 打印Wallet Data返回的签到结果，结果是枚举 SignInResultTypes 的一个对象
+# 打印 SignInResult 返回的签到结果，结果是枚举 SignInResultTypes 的一个对象
 print(r.result.name)
 ```
 
-## 关于 Wallet Data
+## 关于 SignInResult
 
-Wallet Data 是一个**仅可读不可写**的对象，由`client.sign_in()`或`client.get_wallet_data()`返回
+SignInResult 是一个**仅可读不可写**的对象
 
-其含有的对象属性:
+对象属性: 
 
+- `result: SignInResultTypes`
+- `wallet_data: WalletData`
+- `user: User`
+
+## 关于 WalletData
+
+Wallet Data 是一个**仅可读不可写**的对象
+
+对象属性:
+
+- `coin: int`
+- `free_time: int`
+- `send_free_time: int`
+- `is_play_card: bool`
+- `coin_limit: int`
+- `free_time_limit: int`
+- `user: User`
 
