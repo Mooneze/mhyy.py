@@ -68,5 +68,5 @@ WalletData 是一个只读对象，用于返回你的钱包数据
 
 #### 对象方法
 
-- `format_free_time(__format: str) -> str` -> 获取格式化后的免费时间字符串
-- `format_coin_time(__format: str) -> str` -> 获取格式化后的付费时间（米云币时间）字符串
+- `free_date_time() -> datetime.time` -> 获取免费时长对象
+- `coin_date_time() -> datetime.time` -> 获取付费时长（米云币时长）对象

@@ -132,22 +132,12 @@ class WalletData:
         """
         return self._user
 
-    def format_free_time(self, __format: str = "%H Hours %M Seconds") -> str:
-        """
-        Get the free time after formatting
-        :return: The free time after formatting
-        """
-        t = datetime.time(self.free_time // 60, self.free_time % 60)
-        return t.strftime(__format)
+    def free_date_time(self) -> datetime.time:
+        return datetime.time(self.free_time // 60, self.free_time % 60)
 
-    def format_coin_time(self, __format: str = "%H Hours %M Seconds") -> str:
-        """
-        Get the coin time after formatting
-        :return: The coin time after formatting
-        """
+    def coin_date_time(self) -> datetime.time:
         ct = self.coin // 10
-        t = datetime.time(ct // 60, ct % 60)
-        return t.strftime(__format)
+        return datetime.time(ct // 60, ct % 60)
 
 
 class SignInResult:
