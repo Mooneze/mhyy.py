@@ -59,11 +59,11 @@ WalletData 是一个只读对象，用于返回你的钱包数据
 #### 对象属性:
 
 - `coin: int` -> 米云币
-- `free_time: int` -> 免费时长
-- `send_free_time: int` -> 新增的免费时长
+- `free_time: int` -> 免费时长（分钟）
+- `send_free_time: int` -> 新增的免费时长（分钟）
 - `is_play_card: bool` -> 是否是畅玩卡
 - `coin_limit: int` -> 米云币上限
-- `free_time_limit: int` -> 免费时长上限
+- `free_time_limit: int` -> 免费时长上限（分钟）
 - `user: User` -> 所属用户
 
 #### 对象方法
