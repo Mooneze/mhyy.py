@@ -23,6 +23,10 @@ class Client:
         else:
             self._version = version
 
+    @property
+    def version(self):
+        return self._version
+
     def get_wallet_data(self, user: User) -> WalletData:
         """
         Get the wallet data
