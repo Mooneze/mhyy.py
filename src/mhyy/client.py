@@ -56,7 +56,7 @@ class Client:
         :param user: The user performing the operation, should be a User
         :param notification_status: The status of the notification, should be a type of NotificationStatus
         :param notification_type: The type of the notification, should be a type of NotificationTypes
-        :param is_sort: Whether the returned results are displayed from old to new, should be a bool
+        :param is_sort: if sorted, should be a bool
         :return: The notification list of the user
         """
         header = {
