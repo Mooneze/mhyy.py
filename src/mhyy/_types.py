@@ -1,4 +1,4 @@
-from enum import IntEnum
+from enum import IntEnum, StrEnum
 
 
 class UserTypes(IntEnum):
@@ -10,3 +10,12 @@ class SignInResultTypes(IntEnum):
     SUCCESS = 0
     DONE = 1
     OVER_LIMIT = 2
+
+
+class NotificationStatus(StrEnum):
+    UNREAD = "NotificationStatusUnread"
+    READ = "NotificationStatusRead"
+
+
+class NotificationTypes(StrEnum):
+    POPUP = "NotificationTypePopup"

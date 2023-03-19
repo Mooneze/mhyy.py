@@ -42,11 +42,36 @@ print(r.result.name)
 
 ## 文档
 
+关于文档中的 `对象方法` 一栏，若无特殊说明，均为动态方法
+
+### 关于 Client
+
+Client 是一个虚拟的客户端对象，用于执行一系列操作
+
+#### 构造器:
+
+`Client(version: str = None)`
+
+对于其中的 version 字段，若不指定，则为最新版本
+
+#### 对象属性:
+
+- `vesion: str` -> 客户端版本
+
+#### 对象方法:
+
+- `get_wallet_data(user: User) -> WalletData` -> 获取用户的钱包信息
+- `get_notifications(user: User) -> list`
+- -  -> 获取用户的通知，其中，含有形参
+- - `notification_status: NotificationStatus`, 
+- - `notification_type: NotificationTypes`, 
+- - `is_sort: bool = False`
+
 ### 关于 SignInResult
 
 SignInResult 是一个只读对象，用于返回签到结果
 
-#### 对象属性: 
+#### 对象属性:
 
 - `result: SignInResultTypes` -> 签到结果
 - `wallet_data: WalletData` -> 你的钱包数据
