@@ -73,6 +73,7 @@ class Client:
             params["type"] = notification_type.value
 
         params["is_sort"] = str(is_sort).lower()
+
         r = httpx.get(URL.MHY_NOTIFICATION_URL, params=params, headers=header).json()
         return r["data"]["list"]
 
