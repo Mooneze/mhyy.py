@@ -60,11 +60,12 @@ Client 是一个虚拟的客户端对象，用于执行一系列操作
 
 #### 对象方法:
 
-- `get_wallet_data(user: User) -> WalletData` -> 获取用户的钱包信息
+- `sign_in(user: User) -> SignInResult` 签到
+- `get_wallet_data(user: User) -> WalletData` -> 获取用户的钱包信息（若未签到将自动签到）
 - `get_notifications(user: User) -> list`
-- -  -> 获取用户的通知，其中，含有形参
-- - `notification_status: NotificationStatus`, 
-- - `notification_type: NotificationTypes`, 
+- - -> 获取用户的通知，其中，含有形参
+- - `notification_status: NotificationStatus`
+- - `notification_type: NotificationTypes`
 - - `is_sort: bool = False`
 
 ### 关于 SignInResult
