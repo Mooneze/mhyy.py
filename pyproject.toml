@@ -8,7 +8,7 @@ version = "0.1.2.1"
 authors = [
     { name = "GuangChen2333", email = "guangchenworks@outlook.com" },
 ]
-description = "Python API for miHoYo Cloud Gaming (Genshin Impact Cloud) sign in fuction"
+description = "Python API for miHoYo Cloud Gaming (Genshin Impact Cloud)"
 readme = "README.md"
 requires-python = ">=3.6"
 classifiers = [
