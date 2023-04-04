@@ -1,7 +1,8 @@
 # mhyy.py
 
 ![LICENSE](https://img.shields.io/github/license/GuangChen2333/mhyy.py?style=flat-square)
-![PyPi](https://img.shields.io/pypi/v/mhyy.py?style=flat-square)
+![Downloads](https://img.shields.io/pypi/dm/mhyy.py?style=flat-square)
+![PyP](https://img.shields.io/pypi/v/mhyy.py?style=flat-square)
 ![Python](https://img.shields.io/pypi/pyversions/mhyy.py?style=flat-square)
 ![STARS](https://img.shields.io/github/stars/GuangChen2333/mhyy.py?style=flat-square)
 
