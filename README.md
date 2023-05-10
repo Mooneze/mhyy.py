@@ -1,11 +1,13 @@
 # mhyy.py
 
 ![LICENSE](https://img.shields.io/github/license/GuangChen2333/mhyy.py?style=flat-square)
-![PyP](https://img.shields.io/pypi/v/mhyy.py?style=flat-square)
+![PyPi](https://img.shields.io/pypi/v/mhyy.py?style=flat-square)
 ![Python](https://img.shields.io/pypi/pyversions/mhyy.py?style=flat-square)
 ![STARS](https://img.shields.io/github/stars/GuangChen2333/mhyy.py?style=flat-square)
 
 Python 米哈云游（云原神）签到功能与相关方法的API
+
+因为作者要中考了，项目进行的非常缓慢。现在也可以用其实，就是不太人性化。会完善的！
 
 ## 快速开始
 
