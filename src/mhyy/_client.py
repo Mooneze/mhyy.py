@@ -3,12 +3,15 @@ import typing
 
 import httpx
 
-from ._constants import URL
+from ._url import APIStatic, APICloudGame
+from ._wallet import WalletData
+from ._user import User
+from ._exception import WebRequestError, APIError
 
 T = typing.TypeVar("T", bound="Client")
 
 
-class ClientState(enum.StrEnum):
+class ClientState(enum.IntEnum):
     # UNOPENED:
     #   The client has been instantiated, but has not been used to send a web request,
     #   or been opened by entering the context of a `with` block.
@@ -22,10 +25,10 @@ class ClientState(enum.StrEnum):
 
 
 class Client:
-    def __init__(self):
+    def __init__(self: T):
         self._client = httpx.Client()
         self._status = ClientState.UNOPENED
-        version_rep = self._client.get(URL.LAUNCHER_VERSION_URL)
+        version_rep = self._client.get(APIStatic.VERSION)
         self._version = version_rep.json()["data"]["game"]["latest"]["version"]
 
     def __enter__(self: T) -> T:
@@ -58,3 +61,20 @@ class Client:
     @property
     def version(self) -> str:
         return self._version
+
+    def get_wallet(self, user: User) -> WalletData:
+        headers = {
+            "x-rpc-app_version": self._version,
+            "x-rpc-app_id": "1953439974",
+            "x-rpc-vendor_id": "1",
+            "Referer": "https://app.mihoyo.com"
+        }
+        headers.update(user.header)
+        resp = self._client.get(APICloudGame.WALLET, headers=headers)
+        if resp.status_code != 200:
+            raise WebRequestError(f"Status code: {resp.status_code}")
+        resp_data = resp.json()
+        if resp_data["retcode"] != 0:
+            raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
+        return WalletData(resp_data["data"])
+
