@@ -10,7 +10,7 @@ class NotificationStatus(enum.StrEnum):
 
 
 class NotificationType(enum.StrEnum):
-    Popup = "NotificationTypePopup"
+    POPUP = "NotificationTypePopup"
     UNDEFINED = "NotificationTypeUndefined"
 
 
