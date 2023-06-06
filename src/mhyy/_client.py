@@ -3,7 +3,7 @@ import typing
 
 import httpx
 
-from ._url import APIStatic, APICloudGame
+from ._api import APIStatic, APICloudGame
 from ._wallet import WalletData
 from ._user import User
 from ._exception import WebRequestError, APIError
@@ -62,19 +62,32 @@ class Client:
     def version(self) -> str:
         return self._version
 
-    def get_wallet(self, user: User) -> WalletData:
-        headers = {
+    def _get_common_headers(self) -> dict:
+        return {
             "x-rpc-app_version": self._version,
             "x-rpc-app_id": "1953439974",
             "x-rpc-vendor_id": "1",
             "Referer": "https://app.mihoyo.com"
         }
+
+    def _web_get(self, user: User, url: str) -> httpx.Response:
+        headers = self._get_common_headers()
         headers.update(user.header)
-        resp = self._client.get(APICloudGame.WALLET, headers=headers)
+        resp = self._client.get(url, headers=headers)
         if resp.status_code != 200:
             raise WebRequestError(f"Status code: {resp.status_code}")
+        return resp
+
+    def get_wallet(self, user: User) -> WalletData:
+        resp = self._web_get(user, APICloudGame.WALLET)
         resp_data = resp.json()
         if resp_data["retcode"] != 0:
             raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
         return WalletData(resp_data["data"])
+
+    def get_notifications(self, user: User):
+        resp = self._web_get(user, APICloudGame.NOTIFICATION)
+        resp_data = resp.json()
+        if resp_data["retcode"] != 0:
+            raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
 
