@@ -143,4 +143,5 @@ class WalletData:
         是否是每日签到动作
         :return: 是则为真
         """
+        # 这里的逻辑是如果给的免费时间为 0 就不是第一次上线了
         return self.free_time.sent != datetime.time(0, 0)

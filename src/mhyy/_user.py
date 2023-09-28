@@ -1,8 +1,24 @@
-from enum import IntEnum
+from enum import IntEnum, StrEnum
 
 
 class UserType(IntEnum):
     AndroidUser = 2
+
+
+class UserChannel(StrEnum):
+    Mihoyo = "mihoyo"
+
+
+class UserGameBiz(StrEnum):
+    CN = "hk4e_cn"
+
+
+class UserOpBiz(StrEnum):
+    CN = "clgm_cn"
+
+
+class UserCps(StrEnum):
+    Mihoyo = "mihoyo"
 
 
 class User:
