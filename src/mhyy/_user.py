@@ -9,7 +9,7 @@ class UserChannel(StrEnum):
     Mihoyo = "mihoyo"
 
 
-class UserGameBiz(StrEnum):
+class UserCGGameBiz(StrEnum):
     CN = "hk4e_cn"
 
 
@@ -29,7 +29,13 @@ class User:
             device_id: str,
             device_name: str,
             device_model: str,
-            user_type: UserType = UserType.AndroidUser
+            *,
+            user_type: UserType = UserType.AndroidUser,
+            channel: UserChannel = UserChannel.Mihoyo,
+            cg_game_biz: UserCGGameBiz = UserCGGameBiz.CN,
+            op_biz: UserOpBiz = UserOpBiz.CN,
+            cps: UserCps = UserCps.Mihoyo,
+            language: str = "zh-cn"
     ):
         self._combo_token = combo_token
         self._sys_version = sys_version
@@ -37,6 +43,11 @@ class User:
         self._device_name = device_name
         self._device_model = device_model
         self._user_type = user_type
+        self._channel = channel
+        self._cg_game_biz = cg_game_biz
+        self._op_biz = op_biz
+        self._cps = cps
+        self._language = language
 
     @property
     def combo_token(self) -> str:
@@ -63,6 +74,26 @@ class User:
         return self._user_type
 
     @property
+    def channel(self) -> UserChannel:
+        return self._channel
+
+    @property
+    def cps(self) -> UserCps:
+        return self._cps
+
+    @property
+    def cg_game_biz(self) -> UserCGGameBiz:
+        return self.cg_game_biz
+
+    @property
+    def language(self) -> str:
+        return self._language
+
+    @property
+    def op_biz(self) -> UserOpBiz:
+        return self._op_biz
+
+    @property
     def header(self) -> dict:
         """
         用户层的请求头
@@ -72,8 +103,12 @@ class User:
             "x-rpc-combo_token": self._combo_token,
             "x-rpc-client_type": str(self._user_type.value),
             "x-rpc-sys_version": self._sys_version,
-            "x-rpc-channel": "mihoyo",
+            "x-rpc-channel": self._channel.value,
+            "x-rpc-cps": self._cps.value,
+            "x-rpc-cg_game_biz": self._cg_game_biz.value,
             "x-rpc-device_id": self._device_id,
             "x-rpc-device_name": self._device_name,
             "x-rpc-device_model": self._device_model,
+            "x-rpc-language": self._language,
+            "x-rpc-op_biz": self._op_biz.value
         }
