@@ -11,7 +11,7 @@ from ._exception import WebRequestError, APIError
 T = typing.TypeVar("T", bound="Client")
 
 
-class ClientState(enum.IntEnum):
+class ClientStatus(enum.IntEnum):
     # UNOPENED:
     #   The client has been instantiated, but has not been used to send a web request,
     #   or been opened by entering the context of a `with` block.
@@ -27,7 +27,7 @@ class ClientState(enum.IntEnum):
 class Client:
     def __init__(self: T):
         self._client = httpx.Client()
-        self._status = ClientState.UNOPENED
+        self._status = ClientStatus.UNOPENED
         version_rep = self._client.get(APIStatic.VERSION)
         self._version = version_rep.json()["data"]["game"]["latest"]["version"]
 
@@ -38,30 +38,30 @@ class Client:
         return f"Client[version: {self.version}, is_closed: {self.is_closed}, status: {self.status.name}]"
 
     def __enter__(self: T) -> T:
-        if self._state != ClientState.UNOPENED:
+        if self._status != ClientStatus.UNOPENED:
             msg = {
-                ClientState.OPENED: "Cannot open a client instance more than once.",
-                ClientState.CLOSED: "Cannot reopen a client instance, once it has been closed.",
-            }[self._state]
+                ClientStatus.OPENED: "Cannot open a client instance more than once.",
+                ClientStatus.CLOSED: "Cannot reopen a client instance, once it has been closed.",
+            }[self._status]
             raise RuntimeError(msg)
 
-        self._state = ClientState.OPENED
+        self._status = ClientStatus.OPENED
         return self
 
     def __exit__(self, exc_type, exc_val, exc_tb) -> None:
-        self._status = ClientState.CLOSED
+        self._status = ClientStatus.CLOSED
         self._client.close()
 
     def close(self) -> None:
-        self._status = ClientState.CLOSED
+        self._status = ClientStatus.CLOSED
         self._client.close()
 
     @property
     def is_closed(self) -> bool:
-        return self._status == ClientState.CLOSED
+        return self._status == ClientStatus.CLOSED
 
     @property
-    def status(self) -> ClientState:
+    def status(self) -> ClientStatus:
         return self._status
 
     @property
@@ -77,6 +77,11 @@ class Client:
         }
 
     def _web_get(self, user: User, url: str) -> httpx.Response:
+        if self._status == ClientStatus.CLOSED:
+            raise RuntimeError("Cannot send a request, as the client has been closed.")
+
+        self._status = ClientStatus.OPENED
+
         headers = self._get_common_headers()
         headers.update(user.header)
         resp = self._client.get(url, headers=headers)
