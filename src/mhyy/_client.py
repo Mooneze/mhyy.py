@@ -31,6 +31,12 @@ class Client:
         version_rep = self._client.get(APIStatic.VERSION)
         self._version = version_rep.json()["data"]["game"]["latest"]["version"]
 
+    def __repr__(self) -> str:
+        return f"Client()"
+
+    def __str__(self) -> str:
+        return f"Client[version: {self.version}, is_closed: {self.is_closed}, status: {self.status.name}]"
+
     def __enter__(self: T) -> T:
         if self._state != ClientState.UNOPENED:
             msg = {

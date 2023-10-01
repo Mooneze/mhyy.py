@@ -49,6 +49,20 @@ class User:
         self._cps = cps
         self._language = language
 
+    def __str__(self) -> str:
+        return (f"[combo_token: {self._combo_token}, sys_version: {self._sys_version}, "
+                f"device_id: {self._device_id}, device_name: {self._device_name}, "
+                f"device_model: {self._device_model}, user_type: {self._user_type.name}, "
+                f"channel: {self._channel.name}, cg_game_biz: {self._cg_game_biz.name}, "
+                f"op_biz: {self._op_biz.name}, cps: {self._cps}, language: {self._language}]")
+
+    def __repr__(self) -> str:
+        return (f"User(combo_token={self._combo_token}, sys_version={self._sys_version}, device_id={self._device_id}, "
+                f"device_name={self._device_name}, device_model={self._device_model}, "
+                f"user_type={self._user_type}, channel={self._channel}, "
+                f"cg_game_biz={self._cg_game_biz}, op_biz={self._op_biz}, "
+                f"cps={self._cps}, language={self._language})")
+
     @property
     def combo_token(self) -> str:
         return self._combo_token
