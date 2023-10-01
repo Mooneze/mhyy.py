@@ -50,7 +50,7 @@ class User:
         self._language = language
 
     def __str__(self) -> str:
-        return (f"[combo_token: {self._combo_token}, sys_version: {self._sys_version}, "
+        return (f"User[combo_token: {self._combo_token}, sys_version: {self._sys_version}, "
                 f"device_id: {self._device_id}, device_name: {self._device_name}, "
                 f"device_model: {self._device_model}, user_type: {self._user_type.name}, "
                 f"channel: {self._channel.name}, cg_game_biz: {self._cg_game_biz.name}, "
