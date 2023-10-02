@@ -19,13 +19,13 @@ class Notification:
     def __init__(self, data: dict):
         self._data = data
 
-        if data["status"] not in NotificationStatus:
+        if data["status"] not in [status for status in NotificationStatus]:
             self._status = NotificationStatus.UNDEFINED
             warnings.warn(f'The name {data["status"]} is undefined.', UndefinedNameWarning)
         else:
             self._status = NotificationStatus(data["status"])
 
-        if data["type"] not in NotificationType:
+        if data["type"] not in [ntype for ntype in NotificationType]:
             self._type = NotificationType.UNDEFINED
             warnings.warn(f'The name {data["type"]} is undefined.', UndefinedNameWarning)
         else:
@@ -35,7 +35,7 @@ class Notification:
         return f"Notification({self._data})"
 
     def __str__(self) -> str:
-        return f"Notification[{self.msg}]"
+        return f"Notification<{self.msg}>"
 
     @property
     def id(self) -> str:
