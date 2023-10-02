@@ -1,5 +1,6 @@
 import enum
 import warnings
+import datetime
 from ._exception import UndefinedNameWarning
 
 
@@ -16,6 +17,7 @@ class NotificationType(enum.StrEnum):
 
 class Notification:
     def __init__(self, data: dict):
+        self._data = data
         self._id = data["id"]
 
         if data["status"] not in NotificationStatus:
@@ -30,8 +32,40 @@ class Notification:
         else:
             self._type = NotificationType(data["type"])
 
-        self._priority = data["priority"]
-        self._source = data["source"]
-        self._desc = data["desc"]
-        self._msg = data["msg"]
-        self._created_at = data["created_at"]
+    def __repr__(self) -> str:
+        return f"Notification({self._data})"
+
+    def __str__(self) -> str:
+        return f"Notification[{self.msg}]"
+
+    @property
+    def id(self) -> str:
+        return self._id
+
+    @property
+    def status(self) -> NotificationStatus:
+        return self._status
+
+    @property
+    def type(self) -> NotificationType:
+        return self._type
+
+    @property
+    def priority(self) -> int:
+        return self._data["priority"]
+
+    @property
+    def source(self) -> str:
+        return self._data["source"]
+
+    @property
+    def desc(self) -> str:
+        return self._data["desc"]
+
+    @property
+    def msg(self) -> str:
+        return self._data["msg"]
+
+    @property
+    def created_at(self) -> datetime.datetime:
+        return datetime.datetime.fromtimestamp(int(self._data["created_at"]))
