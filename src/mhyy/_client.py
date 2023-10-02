@@ -7,6 +7,7 @@ from ._api import APIStatic, APICloudGame
 from ._wallet import WalletData
 from ._user import User
 from ._exception import WebRequestError, APIError
+from ._notification import Notification
 
 T = typing.TypeVar("T", bound="Client")
 
@@ -96,9 +97,12 @@ class Client:
             raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
         return WalletData(resp_data["data"])
 
-    def get_notifications(self, user: User):
+    def get_notifications(self, user: User) -> list[Notification]:
         resp = self._web_get(user, APICloudGame.NOTIFICATION)
         resp_data = resp.json()
         if resp_data["retcode"] != 0:
             raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
-
+        notifications = []
+        for data in resp_data["data"]["list"]:
+            notifications.append(Notification(data))
+        return notifications
