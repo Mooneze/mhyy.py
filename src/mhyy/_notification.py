@@ -1,16 +1,16 @@
-import enum
 import warnings
 import datetime
+from enum import Enum
 from ._exception import UndefinedNameWarning
 
 
-class NotificationStatus(enum.StrEnum):
+class NotificationStatus(Enum):
     UNREAD = "NotificationStatusUnread"
     READ = "NotificationStatusRead"
     UNDEFINED = "NotificationStatusUndefined"
 
 
-class NotificationType(enum.StrEnum):
+class NotificationType(Enum):
     POPUP = "NotificationTypePopup"
     UNDEFINED = "NotificationTypeUndefined"
 
@@ -19,13 +19,13 @@ class Notification:
     def __init__(self, data: dict):
         self._data = data
 
-        if data["status"] not in [status for status in NotificationStatus]:
+        if data["status"] not in [status.value for status in NotificationStatus]:
             self._status = NotificationStatus.UNDEFINED
             warnings.warn(f'The name {data["status"]} is undefined.', UndefinedNameWarning)
         else:
             self._status = NotificationStatus(data["status"])
 
-        if data["type"] not in [ntype for ntype in NotificationType]:
+        if data["type"] not in [ntype.value for ntype in NotificationType]:
             self._type = NotificationType.UNDEFINED
             warnings.warn(f'The name {data["type"]} is undefined.', UndefinedNameWarning)
         else:
