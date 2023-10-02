@@ -18,7 +18,6 @@ class NotificationType(enum.StrEnum):
 class Notification:
     def __init__(self, data: dict):
         self._data = data
-        self._id = data["id"]
 
         if data["status"] not in NotificationStatus:
             self._status = NotificationStatus.UNDEFINED
@@ -40,7 +39,7 @@ class Notification:
 
     @property
     def id(self) -> str:
-        return self._id
+        return self._data["id"]
 
     @property
     def status(self) -> NotificationStatus:
