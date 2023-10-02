@@ -7,7 +7,7 @@ from ._api import APIStatic, APICloudGame
 from ._wallet import WalletData
 from ._user import User
 from ._exception import WebRequestError, APIError
-from ._notification import Notification
+from ._notification import Notification, NotificationStatus, NotificationType
 
 T = typing.TypeVar("T", bound="Client")
 
@@ -77,7 +77,7 @@ class Client:
             "Referer": "https://app.mihoyo.com"
         }
 
-    def _web_get(self, user: User, url: str) -> httpx.Response:
+    def _web_get(self, user: User, url: str, *, params: dict | None = None) -> httpx.Response:
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
 
@@ -85,7 +85,7 @@ class Client:
 
         headers = self._get_common_headers()
         headers.update(user.header)
-        resp = self._client.get(url, headers=headers)
+        resp = self._client.get(url, headers=headers, params=params)
         if resp.status_code != 200:
             raise WebRequestError(f"Status code: {resp.status_code}")
         return resp
@@ -97,8 +97,20 @@ class Client:
             raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
         return WalletData(resp_data["data"])
 
-    def get_notifications(self, user: User) -> list[Notification]:
-        resp = self._web_get(user, APICloudGame.NOTIFICATION)
+    def get_notifications(
+            self,
+            user: User,
+            *,
+            status: NotificationStatus | None = None,
+            ntype: NotificationType | None = None
+    ) -> list[Notification]:
+        params = {}
+        if status is not None:
+            params["status"] = status.value
+        if ntype is not None:
+            params["type"] = ntype.value
+
+        resp = self._web_get(user, APICloudGame.NOTIFICATION, params=params)
         resp_data = resp.json()
         if resp_data["retcode"] != 0:
             raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
