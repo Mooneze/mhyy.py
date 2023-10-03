@@ -5,5 +5,4 @@ sphinx-autobuild==2021.3.14
 sphinx_copybutton==0.5.2
 sphinx_inline_tabs==2023.4.21
 sphinx-prompt==1.8.0
-m2r2==0.3.3.post2
 recommonmark==0.7.1
