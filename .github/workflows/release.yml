@@ -37,7 +37,7 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           generate_release_notes: true
-          name: mhyy.py ${{ github.ref }}
+          name: mhyy.py ${{ github.ref_name }}
           files: ${{ env.package }}
 
       - name: Publish package
