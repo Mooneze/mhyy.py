@@ -8,6 +8,7 @@
 
 .. toctree::
    :maxdepth: 2
-   :caption: 目录
+   :caption: mhyy.py
 
    快速开始<quick_start.md>
+   文档<document.md>
