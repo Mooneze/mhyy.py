@@ -26,7 +26,8 @@ extensions = [
     'sphinx-prompt',
     'sphinx_inline_tabs',
     'sphinx.ext.autosectionlabel',
-    'sphinx.ext.intersphinx'
+    'sphinx.ext.intersphinx',
+    'm2r2'
 ]
 
 templates_path = ['_templates']
