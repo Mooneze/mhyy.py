@@ -1,23 +1,23 @@
-from enum import IntEnum, StrEnum
+import enum
 
 
-class UserType(IntEnum):
+class UserType(enum.Enum):
     AndroidUser = 2
 
 
-class UserChannel(StrEnum):
+class UserChannel(enum.Enum):
     Mihoyo = "mihoyo"
 
 
-class UserCGGameBiz(StrEnum):
+class UserCGGameBiz(enum.Enum):
     CN = "hk4e_cn"
 
 
-class UserOpBiz(StrEnum):
+class UserOpBiz(enum.Enum):
     CN = "clgm_cn"
 
 
-class UserCps(StrEnum):
+class UserCps(enum.Enum):
     Mihoyo = "mihoyo"
 
 

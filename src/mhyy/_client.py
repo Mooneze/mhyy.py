@@ -1,7 +1,8 @@
 import enum
 import typing
-
 import httpx
+
+from typing import Optional, List
 
 from ._api import APIStatic, APICloudGame
 from ._wallet import WalletData
@@ -12,7 +13,7 @@ from ._notification import Notification, NotificationStatus, NotificationType
 T = typing.TypeVar("T", bound="Client")
 
 
-class ClientStatus(enum.IntEnum):
+class ClientStatus(enum.Enum):
     # UNOPENED:
     #   The client has been instantiated, but has not been used to send a web request,
     #   or been opened by entering the context of a `with` block.
@@ -77,7 +78,7 @@ class Client:
             "Referer": "https://app.mihoyo.com"
         }
 
-    def _web_get(self, user: User, url: str, *, params: dict | None = None) -> httpx.Response:
+    def _web_get(self, user: User, url: str, *, params: Optional[dict] = None) -> httpx.Response:
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
 
@@ -101,9 +102,9 @@ class Client:
             self,
             user: User,
             *,
-            status: NotificationStatus | None = None,
-            ntype: NotificationType | None = None
-    ) -> list[Notification]:
+            status: Optional[NotificationStatus] = None,
+            ntype: Optional[NotificationType] = None
+    ) -> List[Notification]:
         params = {}
         if status is not None:
             params["status"] = status.value

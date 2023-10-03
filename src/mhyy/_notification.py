@@ -1,16 +1,17 @@
 import warnings
 import datetime
-from enum import Enum
+import enum
+
 from ._exception import UndefinedNameWarning
 
 
-class NotificationStatus(Enum):
+class NotificationStatus(enum.Enum):
     UNREAD = "NotificationStatusUnread"
     READ = "NotificationStatusRead"
     UNDEFINED = "NotificationStatusUndefined"
 
 
-class NotificationType(Enum):
+class NotificationType(enum.Enum):
     POPUP = "NotificationTypePopup"
     UNDEFINED = "NotificationTypeUndefined"
 
