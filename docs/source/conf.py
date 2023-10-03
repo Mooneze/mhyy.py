@@ -20,7 +20,15 @@ github_doc_root = 'https://github.com/GuangChen2333/mhyy.py/tree/master/docs/'
 # -- General configuration ---------------------------------------------------
 # https://www.sphinx-doc.org/en/master/usage/configuration.html#general-configuration
 
-extensions = []
+extensions = [
+    'sphinx.ext.viewcode',
+    'sphinx_copybutton',
+    'sphinx-prompt',
+    'sphinx_inline_tabs',
+    'sphinx.ext.autosectionlabel',
+    'sphinx.ext.intersphinx',
+    'm2r2'
+]
 
 templates_path = ['_templates']
 exclude_patterns = []
@@ -48,7 +56,6 @@ def setup(app):
         'auto_toc_tree_section': 'Contents',
         'enable_math': False,
         'enable_inline_math': False,
-        'enable_eval_rst': True,
-        'enable_auto_doc_ref': True,
+        'enable_eval_rst': True
     }, True)
     app.add_transform(AutoStructify)
