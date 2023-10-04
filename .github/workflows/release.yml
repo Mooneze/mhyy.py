@@ -30,7 +30,7 @@ jobs:
 
       - name: Get package
         run: |
-          echo find ./dist/ -name *.whl
+          find ./dist/ -name *.whl
           echo "package=$(find ./dist/ -name *.whl)" >> "$GITHUB_ENV"
 
       - name: Release package
