@@ -19,3 +19,7 @@ pip install mhyy.py
 ## 文档
 
 访问 http://mhyypy.readthedocs.io/ 获取更多细节
+
+## 关于
+
+欢迎协作本项目，如果你有任何意见或想法，请提出Issue。如果你喜欢，请给该仓库点一个Star
