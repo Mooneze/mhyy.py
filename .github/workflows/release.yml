@@ -5,10 +5,10 @@ permissions:
 
 on:
   push:
-    branches:
-      - "master"
     tags:
       - "v*.*.*"
+    branches:
+      - "master"
 
 jobs:
   deploy:
