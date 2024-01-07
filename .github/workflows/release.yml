@@ -4,11 +4,11 @@ permissions:
   contents: write
 
 on:
-  push:
-    tags:
-      - "v*.*.*"
-    branches:
-      - "master"
+  workflow_dispatch:
+    inputs:
+      release-tag:
+        description: 'Release Tag (v1.x.x)'
+        required: true
 
 jobs:
   deploy:
@@ -39,7 +39,8 @@ jobs:
         uses: softprops/action-gh-release@v0.1.15
         with:
           generate_release_notes: true
-          name: mhyy.py ${{ github.ref_name }}
+          name: mhyy.py ${{ inputs.release-tag }}
+          tag_name: ${{ inputs.release-tag }}
           files: ${{ env.package }}
 
       - name: Publish package
