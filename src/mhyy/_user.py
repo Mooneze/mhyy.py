@@ -6,7 +6,7 @@ class UserType(enum.Enum):
 
 
 class UserChannel(enum.Enum):
-    Mihoyo = "mihoyo"
+    Mihoyo = "cyydmihoyo"
 
 
 class UserCGGameBiz(enum.Enum):
@@ -18,7 +18,7 @@ class UserOpBiz(enum.Enum):
 
 
 class UserCps(enum.Enum):
-    Mihoyo = "mihoyo"
+    Mihoyo = "cyydmihoyo"
 
 
 class User:
