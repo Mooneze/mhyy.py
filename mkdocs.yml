@@ -1,0 +1,23 @@
+site_name: mhyy.py
+
+# Theme
+theme:
+  name: material
+  language: zh
+  features:
+    - navigation.instant
+    - navigation.instant.prefetch
+    - navigation.instant.progress
+    - navigation.tracking
+    - navigation.sections
+    - navigation.path
+
+# Repository
+repo_name: GuangChen2333/mhyy.py
+repo_url: https://github.com/GuangChen2333/mhyy.py
+
+# Navigation
+nav:
+  - 简介: index.md
+  - 使用:
+      - 快速开始: usage/quick_start.md
