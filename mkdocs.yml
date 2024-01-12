@@ -19,5 +19,11 @@ repo_url: https://github.com/GuangChen2333/mhyy.py
 # Navigation
 nav:
   - 简介: index.md
-  - 使用:
-      - 快速开始: usage/quick_start.md
+#  - 使用:
+#      - 快速开始: usage/quick_start.md
+
+# noinspection YAMLSchemaValidation
+markdown_extensions:
+  - pymdownx.highlight:
+      use_pygments: true
+  - pymdownx.superfences
