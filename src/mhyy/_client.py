@@ -1,19 +1,18 @@
-import enum
-import typing
+from enum import Enum
+from typing import Optional
+
+from ._api import API
+from ._user import User
+from ._exceptions import WebRequestError
 import httpx
 
-from typing import Optional, List
 
-from ._api import APIStatic, APICloudGame
-from ._wallet import WalletData
-from ._user import User
-from ._exception import WebRequestError, APIError
-from ._notification import Notification, NotificationStatus, NotificationType
-
-T = typing.TypeVar("T", bound="Client")
+class ClientType(Enum):
+    GenshinImpact = 0
+    StarRail = 1
 
 
-class ClientStatus(enum.Enum):
+class ClientStatus(Enum):
     # UNOPENED:
     #   The client has been instantiated, but has not been used to send a web request,
     #   or been opened by entering the context of a `with` block.
@@ -27,19 +26,13 @@ class ClientStatus(enum.Enum):
 
 
 class Client:
-    def __init__(self: T):
+    def __init__(self, client_type: ClientType):
+        self._client_type = client_type
         self._client = httpx.Client()
+        self._version = None
         self._status = ClientStatus.UNOPENED
-        version_rep = self._client.get(APIStatic.VERSION)
-        self._version = version_rep.json()["data"]["game"]["latest"]["version"]
 
-    def __repr__(self) -> str:
-        return f"Client()"
-
-    def __str__(self) -> str:
-        return f"Client[version: {self.version}, is_closed: {self.is_closed}, status: {self.status.name}]"
-
-    def __enter__(self: T) -> T:
+    def __enter__(self):
         if self._status != ClientStatus.UNOPENED:
             msg = {
                 ClientStatus.OPENED: "Cannot open a client instance more than once.",
@@ -54,68 +47,65 @@ class Client:
         self._status = ClientStatus.CLOSED
         self._client.close()
 
-    def close(self) -> None:
-        self._status = ClientStatus.CLOSED
-        self._client.close()
-
-    @property
-    def is_closed(self) -> bool:
-        return self._status == ClientStatus.CLOSED
-
-    @property
-    def status(self) -> ClientStatus:
-        return self._status
-
-    @property
-    def version(self) -> str:
-        return self._version
+    def _update_version(self) -> None:
+        version_url = API.get_game_version_url(self._client_type)
+        resp = self._client.get(version_url, params={
+            "key": API.get_launcher_key(self._client_type),
+            "launcher_id": API.get_launcher_id(self._client_type)
+        }).json()
+        self._version = resp["data"]["game"]["latest"]["version"]
 
     def _get_common_headers(self) -> dict:
         return {
             "x-rpc-app_version": self._version,
-            "x-rpc-app_id": "1953439974",
-            "x-rpc-vendor_id": "1",
-            "Referer": "https://app.mihoyo.com"
+            "x-rpc-app_id": API.get_app_id(self._client_type),
+            "x-rpc-vendor_id": API.get_vendor_id(self._client_type),
+            "x-rpc-cg_game_biz": API.get_cg_game_biz(self._client_type),
+            "x-rpc-op_biz": API.get_op_biz(self._client_type),
+            "x-rpc-cps": API.get_cps(self._client_type)
         }
 
-    def _web_get(self, user: User, url: str, *, params: Optional[dict] = None) -> httpx.Response:
+    def _user_web_get(self, user: User, url: str, params: Optional[dict]) -> httpx.Response:
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
 
-        self._status = ClientStatus.OPENED
+        if self._version is None:
+            self._update_version()
 
-        headers = self._get_common_headers()
-        headers.update(user.header)
+        if self._status != ClientStatus.OPENED:
+            self._status = ClientStatus.OPENED
+
+        headers: dict = self._get_common_headers()
+
+        user_headers: dict = user.get_user_headers()
+        user_headers["x-rpc-channel"] = API.get_channel_id(self._client_type, user_headers["x-rpc-channel"])
+
+        headers.update(user_headers)
+
         resp = self._client.get(url, headers=headers, params=params)
+
         if resp.status_code != 200:
-            raise WebRequestError(f"Status code: {resp.status_code}")
+            raise WebRequestError(
+                f"An error occurred in the network request, status code: {resp.status_code}",
+                resp.status_code
+            )
+
         return resp
 
-    def get_wallet(self, user: User) -> WalletData:
-        resp = self._web_get(user, APICloudGame.WALLET)
-        resp_data = resp.json()
-        if resp_data["retcode"] != 0:
-            raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
-        return WalletData(resp_data["data"])
+    @property
+    def client_type(self) -> ClientType:
+        return self._client_type
 
-    def get_notifications(
-            self,
-            user: User,
-            *,
-            status: Optional[NotificationStatus] = None,
-            ntype: Optional[NotificationType] = None
-    ) -> List[Notification]:
-        params = {}
-        if status is not None:
-            params["status"] = status.value
-        if ntype is not None:
-            params["type"] = ntype.value
+    @property
+    def version(self):
+        return self._version
 
-        resp = self._web_get(user, APICloudGame.NOTIFICATION, params=params)
-        resp_data = resp.json()
-        if resp_data["retcode"] != 0:
-            raise APIError(f"Retcode: {resp_data['retcode']}, Message: {resp_data['message']}")
-        notifications = []
-        for data in resp_data["data"]["list"]:
-            notifications.append(Notification(data))
-        return notifications
+
+class GenshinImpactClient(Client):
+    def __init__(self):
+        super().__init__(ClientType.GenshinImpact)
+
+
+class StarRailClient(Client):
+    def __init__(self):
+        super().__init__(ClientType.StarRail)
