@@ -8,7 +8,7 @@
 
 Python 米哈云游（云原神）签到功能与相关方法的API
 
-## 快速开始
+## 安装
 
 - 从 `PyPi` 安装 `mhyy.py`
 
@@ -18,7 +18,7 @@ pip install mhyy.py
 
 ## 文档
 
-访问 http://mhyypy.readthedocs.io/ 获取更多细节
+访问 https://guangchen2333.github.io/mhyy.py/ 获取更多细节
 
 ## 关于
 
