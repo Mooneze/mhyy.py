@@ -22,6 +22,10 @@ class ClientStatus(Enum):
 
 
 class Client:
+    """
+    米哈云游客户端。
+    """
+
     def __init__(self):
         self._client: httpx.Client = httpx.Client()
         self._status: ClientStatus = ClientStatus.UNOPENED
@@ -47,6 +51,12 @@ class Client:
         self._client.close()
 
     def _update_version(self, game_type: GameType) -> None:
+        """
+        更新客户端版本。
+
+        Args:
+            game_type (GameType): 要更新的客户端类型。
+        """
         version_url = API.get_game_version_url(game_type)
 
         resp = self._client.get(version_url, params={
@@ -57,6 +67,15 @@ class Client:
         self._versions[game_type] = resp["data"]["game"]["latest"]["version"]
 
     def _get_common_headers(self, game_type: GameType) -> dict:
+        """
+        获取指定游戏类型的 headers 常量。
+
+        Args:
+            game_type (GameType): 需要获取 headers 的游戏类型。
+
+        Returns:
+            一个字典，包含了指定游戏的 headers。
+        """
         return {
             "x-rpc-app_version": self._versions[game_type],
             "x-rpc-app_id": API.get_app_id(game_type),
@@ -67,6 +86,18 @@ class Client:
         }
 
     def _user_web_get(self, user: User, url: str, params: Optional[dict] = None) -> httpx.Response:
+        """
+        附带用户 headers 的 get 类型请求。
+
+        Args:
+            user (User): 发起请求的用户。
+            url (str): 目标 URL。
+            params (Optional[dict]): 可选的参数。
+
+        Returns:
+            httpx 库的 Response 类。
+        """
+
         # Check the client state
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
@@ -98,9 +129,33 @@ class Client:
         return resp
 
     def get_wallet_data(self, user: User) -> WalletData:
+        """
+        获取指定用户的钱包数据。
+
+        Args:
+            user (User): 发起请求的用户。
+
+        Returns:
+            该用户的钱包数据。
+        """
         r = self._user_web_get(user, API.get_wallet_data_url(user.game_type)).json()
         return WalletData.from_dict(r['data'])
 
+    def get_client_version(self, game_type: GameType) -> str:
+        """
+        获取指定游戏类型的版本号，若想获取字典类型的所有版本号，请使用 versions 属性。
+
+        Args:
+            game_type: 游戏类型。
+
+        Returns:
+            该游戏类型的版本号。
+        """
+        return self._versions[game_type]
+
     @property
-    def version(self):
+    def versions(self) -> dict:
+        """
+        所有游戏类型的版本号字典，若只想获取指定游戏类型的版本号，请使用 get_client_version() 方法。
+        """
         return self._versions
