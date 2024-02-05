@@ -1,5 +1,5 @@
-from ._client import ClientType
-from ._user import UserChannel
+from ._types import ClientType, UserChannel
+
 
 class API:
     @staticmethod
@@ -59,7 +59,7 @@ class API:
         }[client_type]
 
     @staticmethod
-    def get_channel_id(client_type: ClientType, user_channel: UserChannel) -> str:
+    def get_channel_id(user_channel: UserChannel, client_type: ClientType) -> str:
         channels = {
             UserChannel.Official: {
                 ClientType.GenshinImpact: "cyydmihoyo",
@@ -67,3 +67,10 @@ class API:
             }
         }
         return channels[user_channel][client_type]
+
+    @staticmethod
+    def get_wallet_data_url(client_type: ClientType) -> str:
+        return {
+            ClientType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get",
+            ClientType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/wallet/wallet/get"
+        }[client_type]

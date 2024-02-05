@@ -1,15 +1,11 @@
 from enum import Enum
 from typing import Optional
-
+from ._types import ClientType
 from ._api import API
 from ._user import User
 from ._exceptions import WebRequestError
+from ._wallet import WalletData
 import httpx
-
-
-class ClientType(Enum):
-    GenshinImpact = 0
-    StarRail = 1
 
 
 class ClientStatus(Enum):
@@ -65,7 +61,7 @@ class Client:
             "x-rpc-cps": API.get_cps(self._client_type)
         }
 
-    def _user_web_get(self, user: User, url: str, params: Optional[dict]) -> httpx.Response:
+    def _user_web_get(self, user: User, url: str, params: Optional[dict] = None) -> httpx.Response:
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
 
@@ -78,7 +74,7 @@ class Client:
         headers: dict = self._get_common_headers()
 
         user_headers: dict = user.get_user_headers()
-        user_headers["x-rpc-channel"] = API.get_channel_id(self._client_type, user_headers["x-rpc-channel"])
+        user_headers["x-rpc-channel"] = API.get_channel_id(user.channel, self.client_type)
 
         headers.update(user_headers)
 
@@ -91,6 +87,10 @@ class Client:
             )
 
         return resp
+
+    def get_wallet_data(self, user: User) -> WalletData:
+        r = self._user_web_get(user, API.get_wallet_data_url(self._client_type)).json()
+        return WalletData.from_dict(r['data'])
 
     @property
     def client_type(self) -> ClientType:

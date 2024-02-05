@@ -1,13 +1,5 @@
 from typing import Optional
-from enum import Enum
-
-
-class UserClientType(Enum):
-    Android = 2
-
-
-class UserChannel(Enum):
-    Official = 0
+from ._types import UserChannel, UserClientType
 
 
 class User:
@@ -37,34 +29,35 @@ class User:
             "x-rpc-device_id": self._device_id,
             "x-rpc-device_name": self._device_name,
             "x-rpc-device_model": self._device_model,
-            "x-rpc-client_type": self._client_type.value,
+            # Client type in headers must be string
+            "x-rpc-client_type": str(self._client_type.value),
             "x-rpc-channel": self._client_type
         }
 
     @property
-    def combo_token(self):
+    def combo_token(self) -> str:
         return self._combo_token
 
     @property
-    def sys_version(self):
+    def sys_version(self) -> str:
         return self._sys_version
 
     @property
-    def device_id(self):
+    def device_id(self) -> str:
         return self._device_id
 
     @property
-    def device_name(self):
+    def device_name(self) -> str:
         return self._device_name
 
     @property
-    def device_model(self):
+    def device_model(self) -> str:
         return self._device_model
 
     @property
-    def client_type(self):
+    def client_type(self) -> UserClientType:
         return self._client_type
 
     @property
-    def channel(self):
+    def channel(self) -> UserChannel:
         return self._channel
