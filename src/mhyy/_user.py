@@ -1,5 +1,7 @@
+import warnings
 from typing import Optional
-from ._types import UserChannel, UserClientType
+from ._types import UserChannel, UserClientType, GameType
+from ._exceptions import ComboTokenInvalidError
 
 
 class User:
@@ -11,6 +13,7 @@ class User:
             device_name: str,
             device_model: str,
             *,
+            game_type: Optional[GameType] = None,
             client_type: Optional[UserClientType] = UserClientType.Android,
             channel: Optional[UserChannel] = UserChannel.Official
     ):
@@ -20,7 +23,31 @@ class User:
         self._device_name = device_name
         self._device_model = device_model
         self._client_type = client_type
+        self._game_type = game_type
         self._channel = channel
+
+        try:
+            bi = self._combo_token.split(";bi=")[1]
+        except IndexError:
+            raise ComboTokenInvalidError(
+                "An error occurred in the automatic detection of the game type, "
+                "the 'bi' segment was not found in combo token."
+            )
+
+        detected_game_type = {
+            "hk4e_cn": GameType.GenshinImpact,
+            "hkrpg_cn": GameType.StarRail
+        }[bi]
+
+        if self._game_type is None:
+            self._game_type = detected_game_type
+        else:
+            if self._game_type != detected_game_type:
+                warnings.warn(
+                    "The program detected a difference between the GameType you entered and the GameType it detected. "
+                    "This time, it will use your input as the standard. So the data may be incorrect.”"
+                    "Please pay attention to the GameType."
+                )
 
     def get_user_headers(self):
         return {
@@ -57,6 +84,10 @@ class User:
     @property
     def client_type(self) -> UserClientType:
         return self._client_type
+
+    @property
+    def game_type(self) -> GameType:
+        return self._game_type
 
     @property
     def channel(self) -> UserChannel:

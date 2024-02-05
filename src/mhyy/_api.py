@@ -1,76 +1,76 @@
-from ._types import ClientType, UserChannel
+from ._types import GameType, UserChannel
 
 
 class API:
     @staticmethod
-    def get_launcher_key(client_type: ClientType) -> str:
+    def get_launcher_key(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "eYd89JmJ",
-            ClientType.StarRail: "6KcVuOkbcqjJomjZ"
-        }[client_type]
+            GameType.GenshinImpact: "eYd89JmJ",
+            GameType.StarRail: "6KcVuOkbcqjJomjZ"
+        }[game_type]
 
     @staticmethod
-    def get_launcher_id(client_type: ClientType) -> str:
+    def get_launcher_id(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "18",
-            ClientType.StarRail: "33"
-        }[client_type]
+            GameType.GenshinImpact: "18",
+            GameType.StarRail: "33"
+        }[game_type]
 
     @staticmethod
-    def get_game_version_url(client_type: ClientType) -> str:
+    def get_game_version_url(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "https://sdk-static.mihoyo.com/hk4e_cn/mdk/launcher/api/resource",
-            ClientType.StarRail: "https://api-launcher.mihoyo.com/hkrpg_cn/mdk/launcher/api/resource"
-        }[client_type]
+            GameType.GenshinImpact: "https://sdk-static.mihoyo.com/hk4e_cn/mdk/launcher/api/resource",
+            GameType.StarRail: "https://api-launcher.mihoyo.com/hkrpg_cn/mdk/launcher/api/resource"
+        }[game_type]
 
     @staticmethod
-    def get_app_id(client_type: ClientType) -> str:
+    def get_app_id(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "1953439974",
-            ClientType.StarRail: "1953445976"
-        }[client_type]
+            GameType.GenshinImpact: "1953439974",
+            GameType.StarRail: "1953445976"
+        }[game_type]
 
     @staticmethod
-    def get_vendor_id(client_type: ClientType) -> str:
+    def get_vendor_id(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "1",
-            ClientType.StarRail: "2"
-        }[client_type]
+            GameType.GenshinImpact: "1",
+            GameType.StarRail: "2"
+        }[game_type]
 
     @staticmethod
-    def get_cg_game_biz(client_type: ClientType) -> str:
+    def get_cg_game_biz(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "hk4e_cn",
-            ClientType.StarRail: "hkrpg_cn"
-        }[client_type]
+            GameType.GenshinImpact: "hk4e_cn",
+            GameType.StarRail: "hkrpg_cn"
+        }[game_type]
 
     @staticmethod
-    def get_op_biz(client_type: ClientType) -> str:
+    def get_op_biz(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "clgm_cn",
-            ClientType.StarRail: "clgm_hkrpg-cn"
-        }[client_type]
+            GameType.GenshinImpact: "clgm_cn",
+            GameType.StarRail: "clgm_hkrpg-cn"
+        }[game_type]
 
     @staticmethod
-    def get_cps(client_type: ClientType) -> str:
+    def get_cps(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "cyydmihoyo",
-            ClientType.StarRail: "gw_An_C"
-        }[client_type]
+            GameType.GenshinImpact: "cyydmihoyo",
+            GameType.StarRail: "gw_An_C"
+        }[game_type]
 
     @staticmethod
-    def get_channel_id(user_channel: UserChannel, client_type: ClientType) -> str:
+    def get_channel_id(user_channel: UserChannel, game_type: GameType) -> str:
         channels = {
             UserChannel.Official: {
-                ClientType.GenshinImpact: "cyydmihoyo",
-                ClientType.StarRail: "gw_An_C"
+                GameType.GenshinImpact: "cyydmihoyo",
+                GameType.StarRail: "gw_An_C"
             }
         }
-        return channels[user_channel][client_type]
+        return channels[user_channel][game_type]
 
     @staticmethod
-    def get_wallet_data_url(client_type: ClientType) -> str:
+    def get_wallet_data_url(game_type: GameType) -> str:
         return {
-            ClientType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get",
-            ClientType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/wallet/wallet/get"
-        }[client_type]
+            GameType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get",
+            GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/wallet/wallet/get"
+        }[game_type]

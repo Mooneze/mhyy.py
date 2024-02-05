@@ -1,7 +1,7 @@
 from enum import Enum
 
 
-class ClientType(Enum):
+class GameType(Enum):
     GenshinImpact = 0
     StarRail = 1
 

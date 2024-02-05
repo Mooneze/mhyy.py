@@ -10,3 +10,12 @@ class WebRequestError(RuntimeError):
     @property
     def status_code(self):
         return self._status_code
+
+
+class ComboTokenInvalidError(RuntimeError):
+    def __init__(self, message: str):
+        self._message = message
+
+    @property
+    def message(self):
+        return self._message

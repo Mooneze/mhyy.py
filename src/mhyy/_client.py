@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Optional
-from ._types import ClientType
+from ._types import GameType
 from ._api import API
 from ._user import User
 from ._exceptions import WebRequestError
@@ -22,11 +22,14 @@ class ClientStatus(Enum):
 
 
 class Client:
-    def __init__(self, client_type: ClientType):
-        self._client_type = client_type
-        self._client = httpx.Client()
-        self._version = None
-        self._status = ClientStatus.UNOPENED
+    def __init__(self):
+        self._client: httpx.Client = httpx.Client()
+        self._status: ClientStatus = ClientStatus.UNOPENED
+        # The version will be updated on the first request from the corresponding game.
+        self._versions: dict = {
+            GameType.GenshinImpact: None,
+            GameType.StarRail: None
+        }
 
     def __enter__(self):
         if self._status != ClientStatus.UNOPENED:
@@ -43,38 +46,44 @@ class Client:
         self._status = ClientStatus.CLOSED
         self._client.close()
 
-    def _update_version(self) -> None:
-        version_url = API.get_game_version_url(self._client_type)
-        resp = self._client.get(version_url, params={
-            "key": API.get_launcher_key(self._client_type),
-            "launcher_id": API.get_launcher_id(self._client_type)
-        }).json()
-        self._version = resp["data"]["game"]["latest"]["version"]
+    def _update_version(self, game_type: GameType) -> None:
+        version_url = API.get_game_version_url(game_type)
 
-    def _get_common_headers(self) -> dict:
+        resp = self._client.get(version_url, params={
+            "key": API.get_launcher_key(game_type),
+            "launcher_id": API.get_launcher_id(game_type)
+        }).json()
+
+        self._versions[game_type] = resp["data"]["game"]["latest"]["version"]
+
+    def _get_common_headers(self, game_type: GameType) -> dict:
         return {
-            "x-rpc-app_version": self._version,
-            "x-rpc-app_id": API.get_app_id(self._client_type),
-            "x-rpc-vendor_id": API.get_vendor_id(self._client_type),
-            "x-rpc-cg_game_biz": API.get_cg_game_biz(self._client_type),
-            "x-rpc-op_biz": API.get_op_biz(self._client_type),
-            "x-rpc-cps": API.get_cps(self._client_type)
+            "x-rpc-app_version": self._versions[game_type],
+            "x-rpc-app_id": API.get_app_id(game_type),
+            "x-rpc-vendor_id": API.get_vendor_id(game_type),
+            "x-rpc-cg_game_biz": API.get_cg_game_biz(game_type),
+            "x-rpc-op_biz": API.get_op_biz(game_type),
+            "x-rpc-cps": API.get_cps(game_type)
         }
 
     def _user_web_get(self, user: User, url: str, params: Optional[dict] = None) -> httpx.Response:
+        # Check the client state
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
 
-        if self._version is None:
-            self._update_version()
+        # Check version
+        if self._versions[user.game_type] is None:
+            self._update_version(user.game_type)
 
+        # Update client state
         if self._status != ClientStatus.OPENED:
             self._status = ClientStatus.OPENED
 
-        headers: dict = self._get_common_headers()
+        # Get the special common headers of the game
+        headers: dict = self._get_common_headers(user.game_type)
 
         user_headers: dict = user.get_user_headers()
-        user_headers["x-rpc-channel"] = API.get_channel_id(user.channel, self.client_type)
+        user_headers["x-rpc-channel"] = API.get_channel_id(user.channel, user.game_type)
 
         headers.update(user_headers)
 
@@ -89,23 +98,9 @@ class Client:
         return resp
 
     def get_wallet_data(self, user: User) -> WalletData:
-        r = self._user_web_get(user, API.get_wallet_data_url(self._client_type)).json()
+        r = self._user_web_get(user, API.get_wallet_data_url(user.game_type)).json()
         return WalletData.from_dict(r['data'])
 
     @property
-    def client_type(self) -> ClientType:
-        return self._client_type
-
-    @property
     def version(self):
-        return self._version
-
-
-class GenshinImpactClient(Client):
-    def __init__(self):
-        super().__init__(ClientType.GenshinImpact)
-
-
-class StarRailClient(Client):
-    def __init__(self):
-        super().__init__(ClientType.StarRail)
+        return self._versions
