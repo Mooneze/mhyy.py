@@ -1,27 +1,13 @@
-import enum
-
-
-class UserType(enum.Enum):
-    AndroidUser = 2
-
-
-class UserChannel(enum.Enum):
-    Mihoyo = "cyydmihoyo"
-
-
-class UserCGGameBiz(enum.Enum):
-    CN = "hk4e_cn"
-
-
-class UserOpBiz(enum.Enum):
-    CN = "clgm_cn"
-
-
-class UserCps(enum.Enum):
-    Mihoyo = "cyydmihoyo"
+import warnings
+from typing import Optional
+from ._types import UserChannel, UserClientType, GameType
+from ._exceptions import ComboTokenInvalidError
 
 
 class User:
+    """
+    用户类。
+    """
     def __init__(
             self,
             combo_token: str,
@@ -30,38 +16,74 @@ class User:
             device_name: str,
             device_model: str,
             *,
-            user_type: UserType = UserType.AndroidUser,
-            channel: UserChannel = UserChannel.Mihoyo,
-            cg_game_biz: UserCGGameBiz = UserCGGameBiz.CN,
-            op_biz: UserOpBiz = UserOpBiz.CN,
-            cps: UserCps = UserCps.Mihoyo,
-            language: str = "zh-cn"
+            game_type: Optional[GameType] = None,
+            client_type: Optional[UserClientType] = UserClientType.Android,
+            channel: Optional[UserChannel] = UserChannel.Official
     ):
+        """
+        创建一个用户。
+
+        Args:
+            combo_token (str): 对应 headers 中的 x-rpc-combo_token。
+            sys_version (str): 对应 headers 中的 x-rpc-sys_version。
+            device_id (str): 对应 headers 中的 x-rpc-device_id。
+            device_name (str): 对应 headers 中的 x-rpc-device_name。
+            device_model (str): 对应 headers 中的 x-rpc-device_model。
+            game_type (Optional[GameType]): 游戏类型，若为空则将会从 combo_token 中自动识别。
+            client_type (Optional[UserClientType]): 用户的客户端种类。
+            channel (Optional[UserChannel]): 用户的游戏渠道。
+        """
         self._combo_token = combo_token
         self._sys_version = sys_version
         self._device_id = device_id
         self._device_name = device_name
         self._device_model = device_model
-        self._user_type = user_type
+        self._client_type = client_type
+        self._game_type = game_type
         self._channel = channel
-        self._cg_game_biz = cg_game_biz
-        self._op_biz = op_biz
-        self._cps = cps
-        self._language = language
 
-    def __str__(self) -> str:
-        return (f"User[combo_token: {self._combo_token}, sys_version: {self._sys_version}, "
-                f"device_id: {self._device_id}, device_name: {self._device_name}, "
-                f"device_model: {self._device_model}, user_type: {self._user_type.name}, "
-                f"channel: {self._channel.name}, cg_game_biz: {self._cg_game_biz.name}, "
-                f"op_biz: {self._op_biz.name}, cps: {self._cps}, language: {self._language}]")
+        # Automatic detection of the game type.
 
-    def __repr__(self) -> str:
-        return (f"User(combo_token={self._combo_token}, sys_version={self._sys_version}, device_id={self._device_id}, "
-                f"device_name={self._device_name}, device_model={self._device_model}, "
-                f"user_type={self._user_type}, channel={self._channel}, "
-                f"cg_game_biz={self._cg_game_biz}, op_biz={self._op_biz}, "
-                f"cps={self._cps}, language={self._language})")
+        try:
+            bi = self._combo_token.split(";bi=")[1]
+        except IndexError:
+            raise ComboTokenInvalidError(
+                "An error occurred in the automatic detection of the game type, "
+                "the 'bi' segment was not found in combo token."
+            )
+
+        detected_game_type = {
+            "hk4e_cn": GameType.GenshinImpact,
+            "hkrpg_cn": GameType.StarRail
+        }[bi]
+
+        if self._game_type is None:
+            self._game_type = detected_game_type
+        else:
+            if self._game_type != detected_game_type:
+                warnings.warn(
+                    "The program detected a difference between the GameType you entered and the GameType it detected. "
+                    "This time, it will use your input as the standard. So the data may be incorrect.”"
+                    "Please pay attention to the GameType."
+                )
+
+    def get_user_headers(self) -> dict:
+        """
+        获取该用户的 headers。
+
+        Returns:
+            字典格式的该用户的 header。
+        """
+        return {
+            "x-rpc-combo_token": self._combo_token,
+            "x-rpc-sys_version": self._sys_version,
+            "x-rpc-device_id": self._device_id,
+            "x-rpc-device_name": self._device_name,
+            "x-rpc-device_model": self._device_model,
+            # Client type in headers must be string.
+            "x-rpc-client_type": str(self._client_type.value),
+            "x-rpc-channel": self._client_type
+        }
 
     @property
     def combo_token(self) -> str:
@@ -81,48 +103,16 @@ class User:
 
     @property
     def device_model(self) -> str:
-        return self.device_model
+        return self._device_model
 
     @property
-    def user_type(self) -> UserType:
-        return self._user_type
+    def client_type(self) -> UserClientType:
+        return self._client_type
+
+    @property
+    def game_type(self) -> GameType:
+        return self._game_type
 
     @property
     def channel(self) -> UserChannel:
         return self._channel
-
-    @property
-    def cps(self) -> UserCps:
-        return self._cps
-
-    @property
-    def cg_game_biz(self) -> UserCGGameBiz:
-        return self.cg_game_biz
-
-    @property
-    def language(self) -> str:
-        return self._language
-
-    @property
-    def op_biz(self) -> UserOpBiz:
-        return self._op_biz
-
-    @property
-    def header(self) -> dict:
-        """
-        用户层的请求头
-        :return: 发出 Web 请求时的 `Headers`
-        """
-        return {
-            "x-rpc-combo_token": self._combo_token,
-            "x-rpc-client_type": str(self._user_type.value),
-            "x-rpc-sys_version": self._sys_version,
-            "x-rpc-channel": self._channel.value,
-            "x-rpc-cps": self._cps.value,
-            "x-rpc-cg_game_biz": self._cg_game_biz.value,
-            "x-rpc-device_id": self._device_id,
-            "x-rpc-device_name": self._device_name,
-            "x-rpc-device_model": self._device_model,
-            "x-rpc-language": self._language,
-            "x-rpc-op_biz": self._op_biz.value
-        }

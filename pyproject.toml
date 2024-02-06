@@ -4,20 +4,21 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "mhyy.py"
-version = "1.0.3"
+version = "2.0.0"
 authors = [
     { name = "GuangChen2333", email = "guangchenworks@outlook.com" },
 ]
-description = "Python API for miHoYo Cloud Gaming (Genshin Impact Cloud)"
+description = "Python API for miHoYo Cloud Gaming (Genshin Impact Cloud, Honkai:StarRail Cloud)"
 readme = "README.md"
-requires-python = ">=3.7"
+requires-python = ">=3.8"
 classifiers = [
     "Programming Language :: Python :: 3",
     "License :: OSI Approved :: BSD License",
     "Operating System :: OS Independent",
 ]
 dependencies = [
-    "httpx"
+    "httpx",
+    "dataclasses-json"
 ]
 
 [project.urls]

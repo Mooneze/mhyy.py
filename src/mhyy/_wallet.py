@@ -1,171 +1,106 @@
-import datetime
+from dataclasses import dataclass
+from dataclasses_json import dataclass_json
 
 
+@dataclass_json
+@dataclass(frozen=True)
+class CoinData:
+    """
+    用户的 原点 / 星云币 时长数据。
+
+    Attributes:
+        coin_num (int): 原点 / 星云币 数。
+        free_coin_num (int): 免费 原点 / 星云币 数。
+        coin_limit (int): 原点 / 星云币 的数量上限。
+        exchange (int): 与原点时长的汇率。通常来说，10 原点 / 星云币 = 1 游戏时长。
+    """
+    coin_num: int
+    free_coin_num: int
+    coin_limit: int
+    exchange: int
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class FreeTimeData:
+    """
+    用户的免费时长数据。
+
+    Attributes:
+        send_freetime (int): 若该用户是本日第一次登录，那么此处的值为每日赠送的免费时长 (min)。反之，此处恒为 0。
+        free_time (int): 总免费时长 (min)。
+        free_time_limit (int): 免费时长上限 (min)。
+        over_freetime (int): 该用户是本日第一次登录且赠送的时长有一部分超出了免费时长上限，那么此处的值为溢出的免费时长 (min)。
+    """
+    send_freetime: int
+    free_time: int
+    free_time_limit: int
+    over_freetime: int
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class StatusData:
+    """
+    未知数据
+    """
+    status: int
+    msg: str
+    total_time_status: int
+    status_new: int
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class StatData:
+    """
+    未知数据
+    """
+    vip_point: str
+
+
+@dataclass_json
+@dataclass(frozen=True)
+class PlayCardData:
+    """
+    用户的畅玩卡数据
+
+    Attributes:
+        expire (str): 畅玩卡过期时间
+        msg (str): 畅玩卡信息
+        short_msg (str): 畅玩卡短信息 / 状态
+        play_card_limit (str): 未知
+    """
+    expire: str
+    msg: str
+    short_msg: str
+    play_card_limit: str
+
+
+@dataclass_json
+@dataclass(frozen=True)
 class WalletData:
     """
-    用户的钱包数据
+    用户的钱包数据。
+
+    Attributes:
+        coin (CoinData): 原点时长数据。
+        free_time (FreeTimeData): 免费时长数据。
+        status (StatusData): 未知。
+        stat (StatData): 未知。
+        play_card (PlayCardData): 畅玩卡数据。
     """
+    coin: CoinData
+    free_time: FreeTimeData
+    status: StatusData
+    stat: StatData
+    play_card: PlayCardData
 
-    class _Coin:
+    def is_sign_in(self) -> bool:
         """
-        米云币
+        判断本次行为是否为签到操作 (本日第一次登录)。
+
+        Returns:
+            若为 True，则本次行为是签到操作。
         """
-
-        def __init__(self, data: dict):
-            self._data = data
-
-        def __repr__(self) -> str:
-            return f"WalletData._Coin({self._data})"
-
-        def __str__(self) -> str:
-            return f"WalletData.Coin[coin: {self.coin}, free: {self.free}, limit: {self.limit}]"
-
-        @property
-        def coin(self) -> int:
-            """
-            米云币数量
-            """
-            return int(self._data["coin_num"])
-
-        @property
-        def free(self) -> int:
-            """
-            免费米云币数量
-            """
-            return int(self._data["free_coin_num"])
-
-        @property
-        def limit(self) -> int:
-            """
-            米云币上限
-            """
-            return int(self._data["coin_limit"])
-
-    class _FreeTime:
-        """
-        免费时长
-        """
-
-        def __init__(self, data: dict):
-            self._data = data
-
-        def __repr__(self) -> str:
-            return f"WalletData._Freetime({self._data})"
-
-        def __str__(self) -> str:
-            return (f"WalletData.Freetime["
-                    f"sent: {self.sent}, total: {self.total}, "
-                    f"limit: {self.limit}, overflow: {self.overflow}]")
-
-        @property
-        def sent(self) -> datetime.time:
-            """
-            每日登陆赠送的时长
-            :return: 如果是首次请求(即签到动作)，则返回赠送的时长，否则为 `0`
-            """
-            send_free_time = int(self._data["send_freetime"])
-            return datetime.time(send_free_time // 60, send_free_time % 60)
-
-        @property
-        def total(self) -> datetime.time:
-            """
-            总共的免费时长
-            """
-            free_time = int(self._data["free_time"])
-            return datetime.time(free_time // 60, free_time % 60)
-
-        @property
-        def limit(self) -> datetime.time:
-            """
-            免费时长上限
-            """
-            limit = int(self._data["free_time_limit"])
-            return datetime.time(limit // 60, limit % 60)
-
-        @property
-        def overflow(self) -> datetime.time:
-            """
-            溢出的时长
-            :return: 如果是首次请求(即签到动作), 则返回本次签到溢出的时长
-            """
-            over = int(self._data["over_freetime"])
-            return datetime.time(over // 60, over % 60)
-
-    class _PlayCard:
-        """
-        畅玩卡
-        """
-
-        def __init__(self, data: dict):
-            self._data = data
-
-        def __repr__(self) -> str:
-            return f"WalletData._PlayCard(f{self._data})"
-
-        def __str__(self) -> str:
-            return f"WalletData.PlayCard[expire: {self.expire}, message: {self.message}, status: {self.status}]"
-
-        @property
-        def expire(self) -> str:
-            """
-            过期时间
-            :return: 字符串形式的过期时间
-            """
-            return self._data["expire"]
-
-        @property
-        def message(self) -> str:
-            """
-            点击开通畅玩卡上面的信息
-            :return: 提示信息
-            """
-            return self._data["msg"]
-
-        @property
-        def status(self) -> str:
-            """
-            状态信息
-            """
-            return self._data["short_msg"]
-
-    def __init__(self, data: dict):
-        self._data = data
-        self._coin = self._Coin(data["coin"])
-        self._free_time = self._FreeTime(data["free_time"])
-        self._play_card = self._PlayCard(data["play_card"])
-
-    def __repr__(self) -> str:
-        return f"WalletData({self._data})"
-
-    def __str__(self) -> str:
-        return f"WalletData[Coin: {self.coin}, FreeTime: {self.free_time}, PlayCard: {self.play_card}]"
-
-    @property
-    def coin(self):
-        """
-        米云币
-        """
-        return self._coin
-
-    @property
-    def free_time(self):
-        """
-        免费时长
-        """
-        return self._free_time
-
-    @property
-    def play_card(self):
-        """
-        畅玩卡
-        """
-        return self._play_card
-
-    @property
-    def is_signin(self) -> bool:
-        """
-        是否是每日签到动作
-        :return: 是则为真
-        """
-        # 这里的逻辑是如果给的免费时间为 0 就不是第一次上线了
-        return self.free_time.sent != datetime.time(0, 0)
+        return self.free_time.send_freetime != 0
