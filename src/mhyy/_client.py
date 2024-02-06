@@ -157,12 +157,12 @@ class Client:
 
         Args:
             user (User): 发起请求的用户。
-            status (Optional[NotificationStatus]): 筛选指定的信息状态。
-            type_ (Optional[NotificationType]): 筛选指定的信息种类。
+            status (Optional[NotificationStatus]): 筛选指定的通知状态。
+            type_ (Optional[NotificationType]): 筛选指定的通知种类。
             is_sort (Optional[bool]): 是否排序。
 
         Returns:
-            一个列表，包含了指定用户的指定信息。
+            一个列表，包含了指定用户的指定通知。
         """
 
         # Build params.
@@ -198,7 +198,7 @@ class Client:
         获取指定游戏类型的版本号，若想获取字典类型的所有版本号，请使用 versions 属性。
 
         Args:
-            game_type: 游戏类型。
+            game_type (GameType): 游戏类型。
 
         Returns:
             该游戏类型的版本号。

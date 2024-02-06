@@ -3,4 +3,4 @@ httpx==0.26.0
 dataclasses-json==0.6.4
 
 # Document
-mkdocs-material==9.5.3
+mkdocs-material==9.5.7

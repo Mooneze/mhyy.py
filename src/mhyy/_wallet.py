@@ -12,7 +12,7 @@ class CoinData:
         coin_num (int): 原点 / 星云币 数。
         free_coin_num (int): 免费 原点 / 星云币 数。
         coin_limit (int): 原点 / 星云币 的数量上限。
-        exchange (int): 与原点时长的汇率，10 原点 / 星云币 = 1 游戏时长。
+        exchange (int): 与原点时长的汇率。通常来说，10 原点 / 星云币 = 1 游戏时长。
     """
     coin_num: int
     free_coin_num: int

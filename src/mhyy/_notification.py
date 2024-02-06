@@ -7,7 +7,7 @@ T = TypeVar("T", bound="Notification")
 
 class Notification:
     """
-    通知类
+    通知类。
     """
     def __init__(
             self,
@@ -39,7 +39,7 @@ class Notification:
         从特定的数据结构生成 Notification。
 
         Args:
-            data: 消息数据。
+            data (dict): 消息数据。
 
         Returns:
             包装后的消息数据。

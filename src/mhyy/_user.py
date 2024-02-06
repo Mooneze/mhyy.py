@@ -31,7 +31,7 @@ class User:
             device_model (str): 对应 headers 中的 x-rpc-device_model。
             game_type (Optional[GameType]): 游戏类型，若为空则将会从 combo_token 中自动识别。
             client_type (Optional[UserClientType]): 用户的客户端种类。
-            channel: 用户的游戏渠道。
+            channel (Optional[UserChannel]): 用户的游戏渠道。
         """
         self._combo_token = combo_token
         self._sys_version = sys_version
@@ -72,7 +72,7 @@ class User:
         获取该用户的 headers。
 
         Returns:
-            字典格式的该用户的 headers
+            字典格式的该用户的 header。
         """
         return {
             "x-rpc-combo_token": self._combo_token,
