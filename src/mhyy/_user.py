@@ -5,6 +5,9 @@ from ._exceptions import ComboTokenInvalidError
 
 
 class User:
+    """
+    用户类。
+    """
     def __init__(
             self,
             combo_token: str,
@@ -17,6 +20,19 @@ class User:
             client_type: Optional[UserClientType] = UserClientType.Android,
             channel: Optional[UserChannel] = UserChannel.Official
     ):
+        """
+        创建一个用户。
+
+        Args:
+            combo_token (str): 对应 headers 中的 x-rpc-combo_token。
+            sys_version (str): 对应 headers 中的 x-rpc-sys_version。
+            device_id (str): 对应 headers 中的 x-rpc-device_id。
+            device_name (str): 对应 headers 中的 x-rpc-device_name。
+            device_model (str): 对应 headers 中的 x-rpc-device_model。
+            game_type (Optional[GameType]): 游戏类型，若为空则将会从 combo_token 中自动识别。
+            client_type (Optional[UserClientType]): 用户的客户端种类。
+            channel: 用户的游戏渠道。
+        """
         self._combo_token = combo_token
         self._sys_version = sys_version
         self._device_id = device_id

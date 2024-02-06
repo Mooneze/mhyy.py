@@ -29,6 +29,10 @@ class Notification:
         self._msg = msg
         self._created_at = created_at
 
+    def __repr__(self) -> str:
+        return (f"Notification(id={self._id}, status={self._status}, type={self._type}, priority={self._priority}, "
+                f"source={self._source}, desc={self._desc}, msg={self.msg}, created_at={self._created_at})")
+
     @classmethod
     def from_data_dict(cls, data: dict) -> T:
         """
