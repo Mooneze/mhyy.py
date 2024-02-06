@@ -1,10 +1,11 @@
 from enum import Enum
-from typing import Optional
-from ._types import GameType
+from typing import Optional, List
+from ._types import GameType, NotificationType, NotificationStatus
 from ._api import API
 from ._user import User
-from ._exceptions import WebRequestError
+from ._exceptions import WebRequestError, APIRequestError
 from ._wallet import WalletData
+from ._notification import Notification
 import httpx
 
 
@@ -98,19 +99,19 @@ class Client:
             httpx 库的 Response 类。
         """
 
-        # Check the client state
+        # Check the client state.
         if self._status == ClientStatus.CLOSED:
             raise RuntimeError("Cannot send a request, as the client has been closed.")
 
-        # Check version
+        # Check version.
         if self._versions[user.game_type] is None:
             self._update_version(user.game_type)
 
-        # Update client state
+        # Update client state.
         if self._status != ClientStatus.OPENED:
             self._status = ClientStatus.OPENED
 
-        # Get the special common headers of the game
+        # Get the special common headers of the game.
         headers: dict = self._get_common_headers(user.game_type)
 
         user_headers: dict = user.get_user_headers()
@@ -139,7 +140,58 @@ class Client:
             该用户的钱包数据。
         """
         r = self._user_web_get(user, API.get_wallet_data_url(user.game_type)).json()
+        if r['retcode'] != 0:
+            raise APIRequestError(r['message'], r['retcode'])
         return WalletData.from_dict(r['data'])
+
+    def get_notifications(
+            self,
+            user: User,
+            *,
+            status: Optional[NotificationStatus] = None,
+            type_: Optional[NotificationType] = None,
+            is_sort: Optional[bool] = True
+    ) -> List[Notification]:
+        """
+        获取指定用户的通知信息。
+
+        Args:
+            user (User): 发起请求的用户。
+            status (Optional[NotificationStatus]): 筛选指定的信息状态。
+            type_ (Optional[NotificationType]): 筛选指定的信息种类。
+            is_sort (Optional[bool]): 是否排序。
+
+        Returns:
+            一个列表，包含了指定用户的指定信息。
+        """
+
+        # Build params.
+
+        params = {
+            "is_sort": is_sort
+        }
+
+        # Optional params.
+        if status:
+            params["status"] = status.value
+        if type_:
+            params["type"] = type_.value
+
+        r = self._user_web_get(
+            user,
+            API.get_notifications_url(user.game_type),
+            params=params
+        ).json()
+
+        if r['retcode'] != 0:
+            raise APIRequestError(r['message'], r['retcode'])
+
+        notifications = []
+
+        for notification_data in r['data']['list']:
+            notifications.append(Notification.from_data_dict(notification_data))
+
+        return notifications
 
     def get_client_version(self, game_type: GameType) -> str:
         """

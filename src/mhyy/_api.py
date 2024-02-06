@@ -74,3 +74,10 @@ class API:
             GameType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get",
             GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/wallet/wallet/get"
         }[game_type]
+
+    @staticmethod
+    def get_notifications_url(game_type: GameType) -> str:
+        return {
+            GameType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/listNotifications",
+            GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/gamer/api/listNotifications"
+        }[game_type]

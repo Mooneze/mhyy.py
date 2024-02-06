@@ -26,6 +26,8 @@ class User:
         self._game_type = game_type
         self._channel = channel
 
+        # Automatic detection of the game type.
+
         try:
             bi = self._combo_token.split(";bi=")[1]
         except IndexError:
@@ -56,7 +58,7 @@ class User:
             "x-rpc-device_id": self._device_id,
             "x-rpc-device_name": self._device_name,
             "x-rpc-device_model": self._device_model,
-            # Client type in headers must be string
+            # Client type in headers must be string.
             "x-rpc-client_type": str(self._client_type.value),
             "x-rpc-channel": self._client_type
         }
