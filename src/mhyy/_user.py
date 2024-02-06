@@ -51,7 +51,13 @@ class User:
                     "Please pay attention to the GameType."
                 )
 
-    def get_user_headers(self):
+    def get_user_headers(self) -> dict:
+        """
+        获取该用户的 headers。
+
+        Returns:
+            字典格式的该用户的 headers
+        """
         return {
             "x-rpc-combo_token": self._combo_token,
             "x-rpc-sys_version": self._sys_version,
