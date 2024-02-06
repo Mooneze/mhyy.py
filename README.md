@@ -6,7 +6,7 @@
 ![Python](https://img.shields.io/pypi/pyversions/mhyy.py?style=flat-square)
 ![STARS](https://img.shields.io/github/stars/GuangChen2333/mhyy.py?style=flat-square)
 
-Python 米哈云游（云原神）签到功能与相关方法的API
+Python 米哈云游（云·原神、云·星穷铁道）签到功能与相关方法的API
 
 ## 安装
 
@@ -22,4 +22,6 @@ pip install mhyy.py
 
 ## 关于
 
-欢迎协作本项目，如果你有任何意见或想法，请提出Issue。如果你喜欢，请给该仓库点一个Star
+欢迎协作本项目，如果你有任何意见或想法，请提出Issue。
+
+如果你喜欢此项目，请给该仓库点一个 Star 或提供一定的[捐助](https://afdian.net/a/GuangChen2333)。
