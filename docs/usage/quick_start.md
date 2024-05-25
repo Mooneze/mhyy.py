@@ -10,19 +10,25 @@
 
 在进行这一步之前，你要通过 **抓包** 等方式获取用户的 headers 信息。
 
-若你已经拥有了你的 headers，像这样定义一个用户吧: 
+若你已经拥有了你的 headers，像这样定义一个用户吧:
 
 ```pycon
->>> user = mhyy.User(
+>>>user = mhyy.User(
 ...     combo_token="x-rpc-combo_token",
 ...     sys_version="x-rpc-sys_version",
 ...     device_id="x-rpc-device_id",
 ...     device_name="x-rpc-device_name",
-...     device_model="x-rpc-device_model"
+...     device_model="x-rpc-device_model",
+...     client_type=mhyy.UserClientType.Android
 ... )
 ```
 
 至此，你已经完成了定义用户的操作。
+
+这里的 `client_type` 是根据你的抓包客户端来选择的，如果你的客户端是云·原神（星穹铁道）
+网页版，请选择`mhyy.UserClientType.PCWeb`。
+
+参见 [多客户端支持](./multi_client_support.md)。
 
 ## 定义一个客户端并进行客户端操作
 

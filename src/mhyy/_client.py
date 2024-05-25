@@ -1,6 +1,6 @@
 from enum import Enum
 from typing import Optional, List
-from ._types import GameType, NotificationType, NotificationStatus
+from ._types import GameType, NotificationType, NotificationStatus, UserClientType
 from ._api import API
 from ._user import User
 from ._exceptions import WebRequestError, APIRequestError
@@ -67,23 +67,24 @@ class Client:
 
         self._versions[game_type] = resp["data"]["game"]["latest"]["version"]
 
-    def _get_common_headers(self, game_type: GameType) -> dict:
+    def _get_common_headers(self, game_type: GameType, client_type: UserClientType) -> dict:
         """
         获取指定游戏类型的 headers 常量。
 
         Args:
             game_type (GameType): 需要获取 headers 的游戏类型。
+            client_type (UserClientType): 用户的客户端类型。
 
         Returns:
             一个字典，包含了指定游戏的 headers。
         """
         return {
             "x-rpc-app_version": self._versions[game_type],
-            "x-rpc-app_id": API.get_app_id(game_type),
-            "x-rpc-vendor_id": API.get_vendor_id(game_type),
+            "x-rpc-app_id": API.get_app_id(game_type, client_type),
+            "x-rpc-vendor_id": API.get_vendor_id(game_type, client_type),
             "x-rpc-cg_game_biz": API.get_cg_game_biz(game_type),
             "x-rpc-op_biz": API.get_op_biz(game_type),
-            "x-rpc-cps": API.get_cps(game_type)
+            "x-rpc-cps": API.get_cps(game_type, client_type)
         }
 
     def _user_web_get(self, user: User, url: str, params: Optional[dict] = None) -> httpx.Response:
@@ -112,12 +113,13 @@ class Client:
             self._status = ClientStatus.OPENED
 
         # Get the special common headers of the game.
-        headers: dict = self._get_common_headers(user.game_type)
+        headers: dict = self._get_common_headers(user.game_type, user.client_type)
 
         user_headers: dict = user.get_user_headers()
-        user_headers["x-rpc-channel"] = API.get_channel_id(user.channel, user.game_type)
 
         headers.update(user_headers)
+
+        headers["x-rpc-channel"] = API.get_channel_id(user.channel)
 
         resp = self._client.get(url, headers=headers, params=params)
 

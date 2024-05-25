@@ -38,7 +38,7 @@ type_: Optional[[NotificationType](#notificationtype)] = None, is_sort: Optional
 >
 > **形参:**
 >
-> - game_type ([GameType](#gametype)): 游戏类型。
+> - game_type ([**GameType**](#gametype)): 游戏类型。
 >
 > **返回值:** `str` - 该游戏类型的版本号。
 
@@ -166,21 +166,25 @@ _class mhyy.NotificationType_
 
 _class mhyy.User(combo_token: str, sys_version: str, device_id: str, device_name: str, device_model: str,
 *, game_type: Optional[[GameType](#gametype)] = None, client_type: Optional[[UserClientType](#userclienttype)] =
-UserClientType.Android, channel: Optional[UserChannel] = UserChannel.Official
+None, channel: Optional[UserChannel] = UserChannel.Official
 )_
 
 > 用户类。
 >
 > 形参:
 >
-> - **combo_token** (str): 对应 headers 中的 x-rpc-combo_token。
-> - **sys_version** (str): 对应 headers 中的 x-rpc-sys_version。
-> - **device_id** (str): 对应 headers 中的 x-rpc-device_id。
-> - **device_name** (str): 对应 headers 中的 x-rpc-device_name。
-> - **device_model** (str): 对应 headers 中的 x-rpc-device_model。
-> - **game_type** (Optional[[GameType](#gametype)]): 游戏类型，若为空则将会从 combo_token 中自动识别。
-> - **client_type** (Optional[[UserClientType](#userclienttype)]): 用户的客户端种类。
-> - **channel** (Optional[[UserChannel](#userchannel)]): 用户的游戏渠道。
+> - combo_token (**str**): 对应 headers 中的 x-rpc-combo_token。
+> - sys_version (**str**): 对应 headers 中的 x-rpc-sys_version。
+> - device_id (**str**): 对应 headers 中的 x-rpc-device_id。
+> - device_name (**str**): 对应 headers 中的 x-rpc-device_name。
+> - device_model (**str**): 对应 headers 中的 x-rpc-device_model。
+> - game_type (**Optional[[GameType](#gametype)]**): 游戏类型，若为空则将会从 combo_token 中自动识别。
+> - client_type (**Optional[[UserClientType](#userclienttype)]**): 用户的客户端种类。
+> - channel (**Optional[[UserChannel](#userchannel)]**): 用户的游戏渠道。
+
+!!! Warning
+    
+    在下一次迭代 (v2.1.1) 中，将强制要求指定 `client_type`。
 
 !!! Note
 
@@ -228,13 +232,13 @@ _class mhyy.UserClientType_
 
 > 客户端类型。
 
-!!! Note
-
-    目前 mhyy.py 仅支持模拟安卓设备操作。
-
 `Android` = 2
 
 > 安卓。
+
+`PCWeb` = 16
+
+> PC 网页版。
 
 ## WalletData
 

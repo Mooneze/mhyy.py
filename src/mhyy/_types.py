@@ -20,8 +20,10 @@ class UserClientType(Enum):
 
     Attributes:
         Android: 安卓。
+        PCWeb: PC 网页版。
     """
     Android = 2
+    PCWeb = 16
 
 
 class UserChannel(Enum):
