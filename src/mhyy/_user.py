@@ -8,6 +8,7 @@ class User:
     """
     用户类。
     """
+
     def __init__(
             self,
             combo_token: str,
@@ -17,7 +18,7 @@ class User:
             device_model: str,
             *,
             game_type: Optional[GameType] = None,
-            client_type: Optional[UserClientType] = UserClientType.Android,
+            client_type: Optional[UserClientType] = None,
             channel: Optional[UserChannel] = UserChannel.Official
     ):
         """
@@ -57,6 +58,13 @@ class User:
             "hkrpg_cn": GameType.StarRail
         }[bi]
 
+        if self._client_type is None:
+            self._client_type = UserClientType.Android
+            warnings.warn(
+                "In future versions, unspecified client_type will no longer be supported.",
+                UserWarning
+            )
+
         if self._game_type is None:
             self._game_type = detected_game_type
         else:
@@ -64,7 +72,8 @@ class User:
                 warnings.warn(
                     "The program detected a difference between the GameType you entered and the GameType it detected. "
                     "This time, it will use your input as the standard. So the data may be incorrect.”"
-                    "Please pay attention to the GameType."
+                    "Please pay attention to the GameType.",
+                    SyntaxWarning
                 )
 
     def get_user_headers(self) -> dict:

@@ -26,13 +26,14 @@ $ pip install mhyy.py
 像这样创建用户并填写 headers 后进行签到操作吧 :
 
 ```pycon
->>> from mhyy import User, Client
+>>> from mhyy import User, Client, UserClientType
 >>> user = User(
 ...     combo_token="x-rpc-combo_token",
 ...     sys_version="x-rpc-sys_version",
 ...     device_id="x-rpc-device_id",
 ...     device_name="x-rpc-device_name",
-...     device_model="x-rpc-device_model"
+...     device_model="x-rpc-device_model",
+...     client_type=UserClientType.Android
 ... )
 >>> client = Client()
 >>> r = client.get_wallet_data(user)
@@ -46,7 +47,7 @@ WalletData(coin=CoinData(coin_num=0, free_coin_num=0, coin_limit=200000, ...))
 True
 ```
 
-是的，mhyy.py 支持 云·原神、云·星穹铁道。你无需填写某一位用户属于什么游戏，mhyy.py 将会自动识别并进行操作。
+是的，mhyy.py 支持 云·原神、云·星穹铁道 以及它们的网页版。你无需填写某一位用户属于什么游戏，mhyy.py 将会自动识别并进行操作。
 
 在上述操作中，你成功完成了从**定义用户**到**获取钱包信息**再到**判断是否进行了签到操作**的过程。
 

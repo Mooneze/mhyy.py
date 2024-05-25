@@ -21,6 +21,7 @@ nav:
   - 简介: index.md
   - 使用:
       - 快速入门: usage/quick_start.md
+      - 多客户端支持: usage/multi_client_support.md
   - API 参考:
       - 开发人员接口: api/interface.md
 

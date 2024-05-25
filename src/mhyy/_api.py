@@ -1,4 +1,4 @@
-from ._types import GameType, UserChannel
+from ._types import GameType, UserChannel, UserClientType
 
 
 class API:
@@ -24,49 +24,63 @@ class API:
         }[game_type]
 
     @staticmethod
-    def get_app_id(game_type: GameType) -> str:
+    def get_app_id(game_type: GameType, client_type: UserClientType) -> str:
         return {
-            GameType.GenshinImpact: "1953439974",
-            GameType.StarRail: "1953445976"
-        }[game_type]
+            UserClientType.Android: {
+                GameType.GenshinImpact: "1953439974",
+                GameType.StarRail: "1953445976",
+            },
+            UserClientType.PCWeb: {
+                GameType.GenshinImpact: "4",
+                GameType.StarRail: "8"
+            }
+        }[client_type][game_type]
 
     @staticmethod
-    def get_vendor_id(game_type: GameType) -> str:
+    def get_vendor_id(game_type: GameType, client_type: UserClientType) -> str:
         return {
-            GameType.GenshinImpact: "1",
-            GameType.StarRail: "2"
-        }[game_type]
+            UserClientType.Android: {
+                GameType.GenshinImpact: "1",
+                GameType.StarRail: "2",
+            },
+            UserClientType.PCWeb: {
+                GameType.GenshinImpact: "2",
+                GameType.StarRail: "2"
+            }
+        }[client_type][game_type]
 
     @staticmethod
     def get_cg_game_biz(game_type: GameType) -> str:
         return {
             GameType.GenshinImpact: "hk4e_cn",
-            GameType.StarRail: "hkrpg_cn"
+            GameType.StarRail: "hkrpg_cn",
         }[game_type]
 
     @staticmethod
     def get_op_biz(game_type: GameType) -> str:
         return {
             GameType.GenshinImpact: "clgm_cn",
-            GameType.StarRail: "clgm_hkrpg-cn"
+            GameType.StarRail: "clgm_hkrpg-cn",
         }[game_type]
 
     @staticmethod
-    def get_cps(game_type: GameType) -> str:
+    def get_cps(game_type: GameType, client_type: UserClientType) -> str:
         return {
-            GameType.GenshinImpact: "cyydmihoyo",
-            GameType.StarRail: "gw_An_C"
-        }[game_type]
+            UserClientType.Android: {
+                GameType.GenshinImpact: "mihoyo",
+                GameType.StarRail: "mihoyo",
+            },
+            UserClientType.PCWeb: {
+                GameType.GenshinImpact: "mihoyo",
+                GameType.StarRail: "mihoyo"
+            }
+        }[client_type][game_type]
 
     @staticmethod
-    def get_channel_id(user_channel: UserChannel, game_type: GameType) -> str:
-        channels = {
-            UserChannel.Official: {
-                GameType.GenshinImpact: "cyydmihoyo",
-                GameType.StarRail: "gw_An_C"
-            }
-        }
-        return channels[user_channel][game_type]
+    def get_channel_id(user_channel: UserChannel) -> str:
+        return {
+            UserChannel.Official: "mihoyo"
+        }[user_channel]
 
     @staticmethod
     def get_wallet_data_url(game_type: GameType) -> str:
