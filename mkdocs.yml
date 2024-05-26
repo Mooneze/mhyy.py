@@ -22,6 +22,8 @@ nav:
   - 使用:
       - 快速入门: usage/quick_start.md
       - 多客户端支持: usage/multi_client_support.md
+  - 附录:
+      - 获取你的 Headers: appendix/get_headers.md
   - API 参考:
       - 开发人员接口: api/interface.md
 

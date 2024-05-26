@@ -89,4 +89,4 @@
 >>> notifications = client.get_notifications(user=user, status=mhyy.NotificationStatus.Unread)
 ```
 
-至此，你已经学会了 mhyy.py 的核心用法，具体客户端操作请参考开发人员接口中的 [Client](../api/interface.md#client) 小节。
+至此，你已经学会了 mhyy.py 的核心用法，其他客户端操作方法请参考开发人员接口中的 [Client](../api/interface.md#client) 小节。
