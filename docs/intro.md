@@ -77,9 +77,9 @@ mhyy.py 依赖于以下优秀的开源库。
 
 ## 安装方式
 
-!!! Note
-
-    mhyy.py 需要 python 3.8 及以上运行环境！
+> [!Note]
+>
+ >   mhyy.py 需要 python 3.8 及以上运行环境！
 
 使用 pip 安装 mhyy.py :
 

@@ -41,15 +41,14 @@
 
 至此，你已经完成了客户端的定义。
 
-!!! Tip
-
-    在进行客户端操作前，你需要先了解一下：
-
-    在 mhyy.py 中不同种游戏是共同使用一个客户端的，那意味着你可以使用同一个客户端对不同游戏种类的不同用户进行操作。
-
-    游戏种类将由 mhyy.py 根据 `combo_token` 自动判断或由你自己填写。
-
-    参见 [User](../api/interface.md#user)、[GameType](../api/interface.md#gametype)
+> [!Tip]
+>在进行客户端操作前，你需要先了解一下：
+>
+> 在 mhyy.py 中不同种游戏是共同使用一个客户端的，那意味着你可以使用同一个客户端对不同游戏种类的不同用户进行操作。
+>
+> 游戏种类将由 mhyy.py 根据 `combo_token` 自动判断或由你自己填写。
+>
+> 参见 [User](../api/interface.md#user)、[GameType](../api/interface.md#gametype)
 
 
 ### 获取钱包信息 / 签到
@@ -64,13 +63,13 @@
 
 这个操作适用于获取该用户的获取钱包信息或者白嫖每天赠送的 15 分钟免费时长。
 
-!!! Note
-
-    只有每天第一次进行 获取钱包信息 / 签到 操作才能视为签到操作
-
-    你可以使用这个代码来判断：
-
-    [`wallet.is_sign_in()`](../api/interface.md#walletdata) 将会返回本次操作是否为签到操作。
+> [!Note]
+>
+>    只有每天第一次进行 获取钱包信息 / 签到 操作才能视为签到操作
+>
+>    你可以使用这个代码来判断：
+>
+>    [`wallet.is_sign_in()`](../api/interface.md#walletdata) 将会返回本次操作是否为签到操作。
 
 具体返回的内容请参考开发人员接口中的 [WalletData](../api/interface.md#walletdata) 小结。
 
