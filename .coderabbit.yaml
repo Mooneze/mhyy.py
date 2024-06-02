@@ -5,4 +5,3 @@ reviews:
   request_changes_workflow: true
   high_level_summary_placeholder: "[[SUMMARY]]"
   auto_title_placeholder: "[[TITLE]]"
-  poem: false
