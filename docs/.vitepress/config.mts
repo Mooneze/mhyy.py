@@ -2,6 +2,7 @@ import { defineConfig } from 'vitepress'
 
 // https://vitepress.dev/reference/site-config
 export default defineConfig({
+  base: '/base/',
   title: "MHYY.PY",
   description: "米哈云游（云·原神、云·星穹铁道）签到方法及其他方法的API封装",
   themeConfig: {
