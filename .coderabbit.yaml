@@ -6,6 +6,3 @@ reviews:
   high_level_summary_placeholder: "[[SUMMARY]]"
   auto_title_placeholder: "[[TITLE]]"
   poem: false
-
-chat:
-  auto_reply: false
