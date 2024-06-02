@@ -1,3 +1,4 @@
+# 多客户端支持
 在 `2.1.0` 版本中，我们添加了 mhyy.py 的第二种客户端类型——
 [PCWeb](../api/interface.md#userclienttype)
 

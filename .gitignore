@@ -133,3 +133,7 @@ dmypy.json
 
 # Test
 tests/
+
+docs/.vitepress/dist
+docs/.vitepress/cache
+node_modules
