@@ -266,4 +266,4 @@ dist
 .pnp.*
 
 # VitePress
-.vitepress
+.vitepress/
