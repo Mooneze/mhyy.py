@@ -20,7 +20,7 @@
 使用 pip 安装 mhyy.py :
 
 ```shell
-$ pip install mhyy.py
+pip install mhyy.py
 ```
 
 像这样创建用户并填写 headers 后进行签到操作吧 :
