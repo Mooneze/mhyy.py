@@ -134,6 +134,7 @@ dmypy.json
 # Test
 tests/
 
+# Document
 docs/.vitepress/dist
 docs/.vitepress/cache
 node_modules
