@@ -165,8 +165,8 @@ _class mhyy.NotificationType_
 ## User
 
 _class mhyy.User(combo_token: str, sys_version: str, device_id: str, device_name: str, device_model: str,
-*, game_type: Optional[[GameType](#gametype)] = None, client_type: Optional[[UserClientType](#userclienttype)] =
-None, channel: Optional[UserChannel] = UserChannel.Official
+client_type: [UserClientType](#userclienttype), *, game_type: Optional[[GameType](#gametype)] = None, 
+channel: Optional[[UserChannel](#userchannel)] = UserChannel.Official
 )_
 
 > 用户类。
@@ -178,13 +178,9 @@ None, channel: Optional[UserChannel] = UserChannel.Official
 > - device_id (**str**): 对应 headers 中的 x-rpc-device_id。
 > - device_name (**str**): 对应 headers 中的 x-rpc-device_name。
 > - device_model (**str**): 对应 headers 中的 x-rpc-device_model。
+> - client_type (**[UserClientType](#userclienttype)**): 用户的客户端种类。
 > - game_type (**Optional[[GameType](#gametype)]**): 游戏类型，若为空则将会从 combo_token 中自动识别。
-> - client_type (**Optional[[UserClientType](#userclienttype)]**): 用户的客户端种类。
 > - channel (**Optional[[UserChannel](#userchannel)]**): 用户的游戏渠道。
-
-!!! Warning
-    
-    在下一次迭代 (v2.1.1) 中，将强制要求指定 `client_type`。
 
 !!! Note
 

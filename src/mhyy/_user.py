@@ -16,9 +16,9 @@ class User:
             device_id: str,
             device_name: str,
             device_model: str,
+            client_type: UserClientType,
             *,
             game_type: Optional[GameType] = None,
-            client_type: Optional[UserClientType] = None,
             channel: Optional[UserChannel] = UserChannel.Official
     ):
         """
@@ -30,8 +30,8 @@ class User:
             device_id (str): 对应 headers 中的 x-rpc-device_id。
             device_name (str): 对应 headers 中的 x-rpc-device_name。
             device_model (str): 对应 headers 中的 x-rpc-device_model。
+            client_type (UserClientType): 用户的客户端种类。
             game_type (Optional[GameType]): 游戏类型，若为空则将会从 combo_token 中自动识别。
-            client_type (Optional[UserClientType]): 用户的客户端种类。
             channel (Optional[UserChannel]): 用户的游戏渠道。
         """
         self._combo_token = combo_token
@@ -57,13 +57,6 @@ class User:
             "hk4e_cn": GameType.GenshinImpact,
             "hkrpg_cn": GameType.StarRail
         }[bi]
-
-        if self._client_type is None:
-            self._client_type = UserClientType.Android
-            warnings.warn(
-                "In future versions, unspecified client_type will no longer be supported.",
-                UserWarning
-            )
 
         if self._game_type is None:
             self._game_type = detected_game_type
