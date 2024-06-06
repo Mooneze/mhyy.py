@@ -166,7 +166,7 @@ _class mhyy.NotificationType_
 
 _class mhyy.User(combo_token: str, sys_version: str, device_id: str, device_name: str, device_model: str,
 client_type: [UserClientType](#userclienttype), *, game_type: Optional[[GameType](#gametype)] = None, 
-channel: Optional[UserChannel] = UserChannel.Official
+channel: Optional[[UserChannel](#userchannel)] = UserChannel.Official
 )_
 
 > 用户类。
