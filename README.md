@@ -22,6 +22,6 @@ pip install mhyy.py
 
 ## 关于
 
-欢迎协作本项目，如果你有任何意见或想法，请提出Issue。
+欢迎协作本项目，如果你有任何意见或想法，请提出 Issue 或 Pull Request。
 
-如果你喜欢此项目，请给该仓库点一个 Star 或提供一定的[捐助](https://afdian.net/a/GuangChen2333)。
+如果你喜欢此项目，请给该仓库点一个 Star。
