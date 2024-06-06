@@ -71,8 +71,8 @@ class API:
                 GameType.StarRail: "mihoyo",
             },
             UserClientType.PCWeb: {
-                GameType.GenshinImpact: "mihoyo",
-                GameType.StarRail: "mihoyo"
+                GameType.GenshinImpact: "pc_default",
+                GameType.StarRail: "pc_official"
             }
         }[client_type][game_type]
 
