@@ -4,13 +4,22 @@ layout: home
 
 hero:
   name: "mhyy.py"
-  text: "米哈云游的 API 封装。"
+  text: "Python 米哈云游（云·原神、云·星穹铁道）的 API 封装。"
   tagline: 愿此行，终抵群星。
   actions:
     - theme: brand
-      text: 什么是 mhyy.py ?
-      link: /guide/what-is-mhyy-py
+      text: Markdown Examples
+      link: /markdown-examples
     - theme: alt
-      text: 快速入门
-      link: /guide/quick-start
+      text: API Examples
+      link: /api-examples
+
+features:
+  - title: Feature A
+    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Feature B
+    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
+  - title: Feature C
+    details: Lorem ipsum dolor sit amet, consectetur adipiscing elit
 ---
+
