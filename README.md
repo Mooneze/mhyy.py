@@ -18,7 +18,7 @@ pip install mhyy.py
 
 ## 文档
 
-访问 https://mooneze.github.io/mhyy.py/ 获取更多细节
+访问 <https://mhyy.mooneze.org/> 获取更多细节
 
 ## 关于
 
