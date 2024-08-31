@@ -8,22 +8,24 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: '主页', link: '/' },
+      { text: '指南', link: '/guide/what-is-mhyy-py' }
     ],
 
-    sidebar: [
-      {
-        text: 'Examples',
-        items: [
-          { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
+    sidebar: {
+        '/guide/': [
+            {
+                text: '简介',
+                items: [
+                    { text: '什么是 mhyy.py ?', link: '/guide/what-is-mhyy-py' },
+                    { text: '快速入门', link: '/guide/quick-start' }
+                ]
+            }
         ]
-      }
-    ],
+    },
 
     socialLinks: [
-      { icon: 'github', link: 'https://github.com/vuejs/vitepress' }
+      { icon: 'github', link: 'https://github.com/Mooneze/mhyy.py' }
     ]
   }
 })
