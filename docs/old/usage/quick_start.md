@@ -1,4 +1,4 @@
-首先，我们假设你已经安装好了 mhyy.py，如果你还没有，请参见 [安装方式](../index.md#_4) 小节。
+首先，我们假设你已经安装好了 mhyy.py，如果你还没有，请参见 [安装方式](../../index.md#_4) 小节。
 
 让我们先导入 mhyy.py。
 
@@ -28,7 +28,7 @@
 这里的 `client_type` 是根据你的抓包客户端来选择的，如果你的客户端是云·原神（星穹铁道）
 网页版，请选择`mhyy.UserClientType.PCWeb`。
 
-参见 [多客户端支持](./multi_client_support.md)。
+参见 [多客户端支持](multi_client_support.md)。
 
 ## 定义一个客户端并进行客户端操作
 
