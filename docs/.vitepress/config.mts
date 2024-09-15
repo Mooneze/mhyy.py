@@ -8,8 +8,15 @@ export default defineConfig({
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
-      { text: '主页', link: '/' },
-      { text: '指南', link: '/guide/what-is-mhyy-py' }
+      {
+          text: '主页',
+          link: '/'
+      },
+      {
+          text: '指南',
+          link: '/guide/what-is-mhyy-py',
+          activeMatch: '/guide/'
+      }
     ],
 
     sidebar: {
@@ -17,7 +24,7 @@ export default defineConfig({
             {
                 text: '简介',
                 items: [
-                    { text: '什么是 mhyy.py ?', link: '/guide/what-is-mhyy-py' },
+                    { text: '关于 mhyy.py', link: '/guide/what-is-mhyy-py' },
                     { text: '快速入门', link: '/guide/quick-start' }
                 ]
             }

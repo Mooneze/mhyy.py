@@ -4,7 +4,7 @@ layout: home
 
 hero:
   name: "mhyy.py"
-  text: "Python\n米哈云游的 API 封装。"
+  text: "米哈云游的 API 封装。"
   tagline: 愿此行，终抵群星。
   actions:
     - theme: brand
