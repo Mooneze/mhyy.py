@@ -70,11 +70,13 @@ class PlayCardData:
         msg (str): 畅玩卡信息
         short_msg (str): 畅玩卡短信息 / 状态
         play_card_limit (str): 未知
+        remaining_sec (str): 未知
     """
     expire: str
     msg: str
     short_msg: str
     play_card_limit: str
+    remaining_sec: str
 
 
 @dataclass_json
@@ -89,12 +91,15 @@ class WalletData:
         status (StatusData): 未知。
         stat (StatData): 未知。
         play_card (PlayCardData): 畅玩卡数据。
+        total_time (int): 总时长。
     """
+
     coin: CoinData
     free_time: FreeTimeData
     status: StatusData
     stat: StatData
     play_card: PlayCardData
+    total_time: int
 
     def is_sign_in(self) -> bool:
         """
