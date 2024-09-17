@@ -10,7 +10,12 @@ hero:
     - theme: brand
       text: 什么是 mhyy.py ?
       link: /guide/what-is-mhyy-py
+      
     - theme: alt
       text: 快速入门
       link: /guide/quick-start
+      
+    - theme: alt
+      text: API 参考
+      link: /reference/interface
 ---

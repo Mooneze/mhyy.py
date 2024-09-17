@@ -1,4 +1,8 @@
-## Client
+# API 参考
+
+这里是 mhyy.py 的 API 参考，这里有一切你可以用到的。
+
+## Client {#client}
 
 _mhyy.Client()_
 
@@ -14,7 +18,7 @@ _mhyy.Client()_
 >
 > **形参:**
 >
-> - user ([**User**](#User)): 发起请求的用户。
+> - user ([**User**](#user)): 发起请求的用户。
 >
 > **返回值:** [`WalletData`](#walletdata) - 该用户的钱包数据。
 
@@ -42,7 +46,7 @@ type_: Optional[[NotificationType](#notificationtype)] = None, is_sort: Optional
 >
 > **返回值:** `str` - 该游戏类型的版本号。
 
-## GameType
+## GameType {#gametype}
 
 _class mhyy.GameType_
 
@@ -56,17 +60,13 @@ _class mhyy.GameType_
 
 > 云·星穹铁道。
 
-## Notification
+## Notification {#notification}
 
 > 通知类。
 
 _class mhyy.Notification_
 (id_: str, status: [NotificationStatus](#notificationstatus), type_:
 [NotificationType](#notificationtype), priority: int, source: str, desc: str, msg: str, created_at: str)
-
-!!! Note
-
-    这里不提供构造方法，因为根本没有导出。
 
 `id`: str
 
@@ -110,7 +110,7 @@ _class mhyy.Notification_
 >
 > **返回值:** [`Notification`](#notification) - 包装后的消息数据。
 
-## NotificationStatus
+## NotificationStatus {#notificationstatus}
 
 _class mhyy.NotificationStatus_
 
@@ -138,7 +138,7 @@ _class mhyy.NotificationStatus_
 >
 > **返回值:** [`NotificationStatus`](#notificationstatus) - 枚举成员。
 
-## NotificationType
+## NotificationType {#notificationtype}
 
 _class mhyy.NotificationType_
 
@@ -162,7 +162,7 @@ _class mhyy.NotificationType_
 >
 > **返回值:** [`NotificationType`](#notificationtype) - 枚举成员。
 
-## User
+## User {#user}
 
 _class mhyy.User(combo_token: str, sys_version: str, device_id: str, device_name: str, device_model: str,
 client_type: [UserClientType](#userclienttype), *, game_type: Optional[[GameType](#gametype)] = None, 
@@ -171,7 +171,7 @@ channel: Optional[[UserChannel](#userchannel)] = UserChannel.Official
 
 > 用户类。
 >
-> 形参:
+> **形参:**
 >
 > - combo_token (**str**): 对应 headers 中的 x-rpc-combo_token。
 > - sys_version (**str**): 对应 headers 中的 x-rpc-sys_version。
@@ -182,9 +182,11 @@ channel: Optional[[UserChannel](#userchannel)] = UserChannel.Official
 > - game_type (**Optional[[GameType](#gametype)]**): 游戏类型，若为空则将会从 combo_token 中自动识别。
 > - channel (**Optional[[UserChannel](#userchannel)]**): 用户的游戏渠道。
 
-!!! Note
+::: info
 
-    这里不提供成员的文档说明，因为他是形参的 Getter。
+这里不提供成员的文档说明，因为他是形参的 Getter。
+
+:::
 
 `combo_token`: str
 
@@ -208,21 +210,23 @@ channel: Optional[[UserChannel](#userchannel)] = UserChannel.Official
 >
 > **返回值:** dict - 字典格式的该用户的 headers。
 
-## UserChannel
+## UserChannel {#userchannel}
 
 _class mhyy.UserChannel_
 
 > 游戏渠道。
 
-!!! Note
+::: info
 
-    目前 mhyy.py 仅支持官方服务器的操作。
+目前 mhyy.py 仅支持官方服务器的操作。
+
+:::
 
 `Official` = 0
 
 > 官方服。
 
-## UserClientType
+## UserClientType {#userclienttype}
 
 _class mhyy.UserClientType_
 
@@ -236,20 +240,26 @@ _class mhyy.UserClientType_
 
 > PC 网页版。
 
-## WalletData
+## WalletData {#walletdata}
 
 _class mhyy.WalletData_
 
-!!! Info
+::: info
 
-    事实上，mhyy.WalletData包含五个子类，分别是
-    `mhyy.CoinData`、`mhyy.FreeTimeData`、`mhyy.StatusData`、
-    `mhyy.StatData`、`mhyy.PlayCardData`。
+事实上，mhyy.WalletData包含五个子类，分别是
+`mhyy.CoinData`、`mhyy.FreeTimeData`、`mhyy.StatusData`、
+`mhyy.StatData`、`mhyy.PlayCardData`。
 
-    但这些成员子类都没有导出且`mhyy.WalletData`与他的成员子类都是 `dataclass`。
-    没有构造函数，仅供读取数据。
+但这些成员子类都没有导出且 `mhyy.WalletData` 与他的成员子类都是 `dataclass`。
+没有构造函数，仅供读取数据。
 
-    所以在本文档中不会描述其五个子类，仅当作成员描写。
+所以在本文档中不会描述其五个子类，仅当作类属性描写。
+
+:::
+
+`total_time`: int
+
+> 包含了付费时长和免费时长的总时长。
 
 ### `coin`
 
@@ -295,9 +305,11 @@ _class mhyy.WalletData_
 
 > 未知数据
 
-!!! Warning
+::: warning
 
-    这是一条未知的数据，具体内容待补充。
+这是一条未知的数据，具体内容待补充。
+
+:::
 
 `status.status`: int
 
@@ -311,9 +323,11 @@ _class mhyy.WalletData_
 
 > 未知数据
 
-!!! Warning
+::: warning
 
-    这是一条未知的数据，具体内容待补充。
+这是一条未知的数据，具体内容待补充。
+
+:::
 
 `vip_point`: str
 
@@ -325,9 +339,11 @@ _class mhyy.WalletData_
 
 > 畅玩卡过期时间（格式未知）
 
-!!! Warning
+::: warning
 
-    这是一条未知的数据，请谨慎使用。
+这是一条未知的数据，请谨慎使用。
+
+:::
 
 `play_card.msg`: str
 
@@ -341,6 +357,18 @@ _class mhyy.WalletData_
 
 > 未知
 
-!!! Warning
+::: warning
 
-    这是一条未知的数据，具体内容待补充。
+这是一条未知的数据，具体内容待补充。
+
+:::
+
+`remaining_sec`: str
+
+> 未知
+
+::: warning
+
+这是一条未知的数据，具体内容待补充。
+
+:::
