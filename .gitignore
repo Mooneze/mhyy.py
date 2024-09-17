@@ -177,3 +177,8 @@ pyrightconfig.json
 
 # Test
 test/
+
+node_modules/
+
+.vitepress/cache
+.vitepress/dist

@@ -4,7 +4,7 @@ import {defineConfig} from 'vitepress'
 export default defineConfig({
     title: "mhyy.py",
     description: "Python 米哈云游（云·原神、云·星穹铁道）的 API 封装。",
-    base: '/mhyy.py/',
+    base: '/',
     themeConfig: {
         // https://vitepress.dev/reference/default-theme-config
         nav: [
