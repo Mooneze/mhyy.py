@@ -86,7 +86,7 @@ class WalletData:
     用户的钱包数据。
 
     Attributes:
-        coin (CoinData): 原点时长数据。
+        coin (CoinData): 付费时长数据。
         free_time (FreeTimeData): 免费时长数据。
         status (StatusData): 未知。
         stat (StatData): 未知。
