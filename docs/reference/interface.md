@@ -1,6 +1,18 @@
 # API 参考
 
-这里是 mhyy.py 的 API 参考，这里有一切你可以用到的。
+这里是 mhyy.py 的 API 参考！慢慢寻找吧！
+
+### 索引
+
+- [Client](#client)
+- [GameType](#gametype)
+- [Notification](#notification)
+- [NotificationStatus](#notificationstatus)
+- [NotificationType](#notificationtype)
+- [User](#user)
+- [UserChannel](#userchannel)
+- [UserClientType](#userclienttype)
+- [WalletData](#walletdata)
 
 ## Client {#client}
 

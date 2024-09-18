@@ -66,7 +66,7 @@ user = mhyy.User(
 其中的 `combo_token`, `sys_version`, `device_id`, `device_name`,
 `device_model` 都需要你通过抓包来获取。
 
-你也可以通过 Mooneze 开发的 [Easy-MHYY](https://github.com/Mooneze/Easy-MHYY) 来获取适用于 `mhyy.UserClientType.PCWeb`
+你也可以通过 [Easy-MHYY](https://github.com/Mooneze/Easy-MHYY) 来获取适用于 `mhyy.UserClientType.PCWeb`
 的这些字段。
 
 需要注意的是，`client_type` 需要根据你抓包的平台进行切换，目前支持的平台有:
@@ -76,7 +76,7 @@ user = mhyy.User(
 
 ### 进行签到吧 {#let-us-sign-in}
 
-在米哈云游的逻辑中，签到操作是属于获取钱包 (Wallet) 的操作的一部分。因此，如果我们想要签到，
+在米哈云游的逻辑中，签到操作是获取钱包 (Wallet) 操作的一部分。因此，如果我们想要签到，
 我们就需要获取我们的钱包 (Wallet)。
 
 我们封装了获取钱包 (Wallet) 的方法 `Client.get_wallet_data() -> WalletData`，像这样获取用户的钱包吧：
@@ -106,9 +106,41 @@ if r.is_sign_in():
 print(f"总时长: {r.total_time}, 付费时长: {r.coin.coin_num}, 免费时长: {r.free_time.free_time}")
 ```
 
-你也可以通过 `r.free_time.send_freetime -> int` 来完善你的签到操作输出：
+你也可以通过 `WalletData.free_time.send_freetime -> int` 来完善你的签到操作输出：
 
 ```python
 if r.is_sign_in():
     print(f"进行了签到，新增免费时长: {r.free_time.send_freetime}") 
 ```
+
+::: details 完整示例？
+
+```python
+# 现在，让我们复习一下吧。
+import mhyy  # 导入 mhyy.py
+
+client = mhyy.Client()  # 实例化 Client
+user = mhyy.User(
+    combo_token="x-rpc-combo_token",
+    sys_version="x-rpc-sys_version",
+    device_id="x-rpc-device_id",
+    device_name="x-rpc-device_name",
+    device_model="x-rpc-device_model",
+    client_type=mhyy.UserClientType.PCWeb
+)  # 实例化 User
+
+r = client.get_wallet_data(user)  # 获取钱包信息
+
+if r.is_sign_in():  # 判断是否进行了签到
+    print(f"进行了签到，新增免费时长: {r.free_time.send_freetime}")
+
+print(f"总时长: {r.total_time}, 付费时长: {r.coin.coin_num}, 免费时长: {r.free_time.free_time}")
+```
+
+:::
+
+::: tip 想要探寻更多？
+
+跳到 [API参考](../reference/interface.md)。
+
+:::
