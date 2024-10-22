@@ -8,3 +8,6 @@ from ._types import UserClientType, UserChannel
 
 # Notification
 from ._types import NotificationType, NotificationStatus
+
+# Exceptions
+from ._exceptions import WebRequestError, ComboTokenInvalidError, APIRequestError
