@@ -384,3 +384,13 @@ _class mhyy.WalletData_
 这是一条未知的数据，具体内容待补充。
 
 :::
+
+`play_card_tag`: str
+
+> 未知
+
+::: warning
+
+这是一条未知的数据，具体内容待补充。
+
+:::
