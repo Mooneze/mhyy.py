@@ -71,12 +71,14 @@ class PlayCardData:
         short_msg (str): 畅玩卡短信息 / 状态
         play_card_limit (str): 未知
         remaining_sec (str): 未知
+        play_card_tag (str): 未知
     """
     expire: str
     msg: str
     short_msg: str
     play_card_limit: str
     remaining_sec: str
+    play_card_tag: str
 
 
 @dataclass_json
