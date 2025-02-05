@@ -73,7 +73,7 @@ class User:
         # PCWeb for ZZZ
 
         if self._game_type == GameType.ZZZ and self._client_type == UserClientType.PCWeb:
-            raise NotImplementedError("ZZZ's PC Web is not supported for the time being.")
+            raise NotImplementedError("ZZZ's PC Web is not supported. Use Android.")
 
     def get_user_headers(self) -> dict:
         """
