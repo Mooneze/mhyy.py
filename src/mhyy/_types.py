@@ -9,9 +9,11 @@ class GameType(Enum):
     Attributes:
         GenshinImpact: 云·原神。
         StarRail: 云·星穹铁道。
+        ZZZ: 云·绝区零
     """
     GenshinImpact = 0
     StarRail = 1
+    ZZZ = 2
 
 
 class UserClientType(Enum):

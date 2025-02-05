@@ -33,7 +33,8 @@ class Client:
         # The version will be updated on the first request from the corresponding game.
         self._versions: dict = {
             GameType.GenshinImpact: None,
-            GameType.StarRail: None
+            GameType.StarRail: None,
+            GameType.ZZZ: None
         }
 
     def __enter__(self):
@@ -58,14 +59,13 @@ class Client:
         Args:
             game_type (GameType): 要更新的客户端类型。
         """
-        version_url = API.get_game_version_url(game_type)
+        version_url = 'https://hyp-api.mihoyo.com/hyp/hyp-connect/api/getGamePackages'
 
         resp = self._client.get(version_url, params={
-            "key": API.get_launcher_key(game_type),
             "launcher_id": API.get_launcher_id(game_type)
         }).json()
 
-        self._versions[game_type] = resp["data"]["game"]["latest"]["version"]
+        self._versions[game_type] = resp["data"]["game_packages"][0]["main"]["major"]["version"]
 
     def _get_common_headers(self, game_type: GameType, client_type: UserClientType) -> dict:
         """
@@ -119,7 +119,11 @@ class Client:
 
         headers.update(user_headers)
 
-        headers["x-rpc-channel"] = API.get_channel_id(user.channel)
+        headers["x-rpc-channel"] = API.get_channel_id(user.game_type, user.channel)
+
+        # ZZZ special header cg_game_id
+        if user.game_type == GameType.ZZZ:
+            headers['x-rpc-cg_game_id'] = '9000357'
 
         resp = self._client.get(url, headers=headers, params=params)
 
@@ -141,7 +145,10 @@ class Client:
         Returns:
             该用户的钱包数据。
         """
-        r = self._user_web_get(user, API.get_wallet_data_url(user.game_type)).json()
+        r = self._user_web_get(
+            user,
+            API.get_wallet_data_url(user.game_type)
+        ).json()
         if r['retcode'] != 0:
             raise APIRequestError(r['message'], r['retcode'])
         return WalletData.from_dict(r['data'])
@@ -197,7 +204,8 @@ class Client:
 
     def get_client_version(self, game_type: GameType) -> str:
         """
-        获取指定游戏类型的版本号，若想获取字典类型的所有版本号，请使用 versions 属性。
+        获取指定游戏类型的版本号，若未发送过请求，将会强制更新。
+        若想获取字典类型的所有版本号，请使用 versions 属性。
 
         Args:
             game_type (GameType): 游戏类型。
@@ -205,6 +213,9 @@ class Client:
         Returns:
             该游戏类型的版本号。
         """
+        if self._versions[game_type] is None:
+            self._update_version(game_type)
+
         return self._versions[game_type]
 
     @property

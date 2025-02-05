@@ -55,7 +55,8 @@ class User:
 
         detected_game_type = {
             "hk4e_cn": GameType.GenshinImpact,
-            "hkrpg_cn": GameType.StarRail
+            "hkrpg_cn": GameType.StarRail,
+            "nap_cn": GameType.ZZZ
         }[bi]
 
         if self._game_type is None:
@@ -68,6 +69,11 @@ class User:
                     "Please pay attention to the GameType.",
                     SyntaxWarning
                 )
+
+        # PCWeb for ZZZ
+
+        if self._game_type == GameType.ZZZ and self._client_type == UserClientType.PCWeb:
+            raise NotImplementedError("ZZZ's PC Web is not supported for the time being.")
 
     def get_user_headers(self) -> dict:
         """

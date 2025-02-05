@@ -3,24 +3,11 @@ from ._types import GameType, UserChannel, UserClientType
 
 class API:
     @staticmethod
-    def get_launcher_key(game_type: GameType) -> str:
-        return {
-            GameType.GenshinImpact: "eYd89JmJ",
-            GameType.StarRail: "6KcVuOkbcqjJomjZ"
-        }[game_type]
-
-    @staticmethod
     def get_launcher_id(game_type: GameType) -> str:
         return {
-            GameType.GenshinImpact: "18",
-            GameType.StarRail: "33"
-        }[game_type]
-
-    @staticmethod
-    def get_game_version_url(game_type: GameType) -> str:
-        return {
-            GameType.GenshinImpact: "https://sdk-static.mihoyo.com/hk4e_cn/mdk/launcher/api/resource",
-            GameType.StarRail: "https://api-launcher.mihoyo.com/hkrpg_cn/mdk/launcher/api/resource"
+            GameType.GenshinImpact: "umfgRO5gh5",
+            GameType.StarRail: "6P5gHMNyK3",
+            GameType.ZZZ: "jGHBHlcOq1",
         }[game_type]
 
     @staticmethod
@@ -29,6 +16,7 @@ class API:
             UserClientType.Android: {
                 GameType.GenshinImpact: "1953439974",
                 GameType.StarRail: "1953445976",
+                GameType.ZZZ: "1953458679",
             },
             UserClientType.PCWeb: {
                 GameType.GenshinImpact: "4",
@@ -42,6 +30,7 @@ class API:
             UserClientType.Android: {
                 GameType.GenshinImpact: "1",
                 GameType.StarRail: "2",
+                GameType.ZZZ: "2",
             },
             UserClientType.PCWeb: {
                 GameType.GenshinImpact: "2",
@@ -54,6 +43,7 @@ class API:
         return {
             GameType.GenshinImpact: "hk4e_cn",
             GameType.StarRail: "hkrpg_cn",
+            GameType.ZZZ: "nap_cn",
         }[game_type]
 
     @staticmethod
@@ -61,6 +51,7 @@ class API:
         return {
             GameType.GenshinImpact: "clgm_cn",
             GameType.StarRail: "clgm_hkrpg-cn",
+            GameType.ZZZ: "clgm_nap-cn",
         }[game_type]
 
     @staticmethod
@@ -69,6 +60,7 @@ class API:
             UserClientType.Android: {
                 GameType.GenshinImpact: "mihoyo",
                 GameType.StarRail: "mihoyo",
+                GameType.ZZZ: "oosnsdyu_C",
             },
             UserClientType.PCWeb: {
                 GameType.GenshinImpact: "pc_default",
@@ -77,21 +69,27 @@ class API:
         }[client_type][game_type]
 
     @staticmethod
-    def get_channel_id(user_channel: UserChannel) -> str:
+    def get_channel_id(game_type: GameType, user_channel: UserChannel) -> str:
         return {
-            UserChannel.Official: "mihoyo"
-        }[user_channel]
+            UserChannel.Official: {
+                GameType.GenshinImpact: "mihoyo",
+                GameType.StarRail: "mihoyo",
+                GameType.ZZZ: "oosnsdyu_C",
+            }
+        }[user_channel][game_type]
 
     @staticmethod
     def get_wallet_data_url(game_type: GameType) -> str:
         return {
             GameType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/wallet/wallet/get",
-            GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/wallet/wallet/get"
+            GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/wallet/wallet/get",
+            GameType.ZZZ: "https://cg-nap-api.mihoyo.com/nap_cn/cg/wallet/wallet/get"
         }[game_type]
 
     @staticmethod
     def get_notifications_url(game_type: GameType) -> str:
         return {
             GameType.GenshinImpact: "https://api-cloudgame.mihoyo.com/hk4e_cg_cn/gamer/api/listNotifications",
-            GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/gamer/api/listNotifications"
+            GameType.StarRail: "https://cg-hkrpg-api.mihoyo.com/hkrpg_cn/cg/gamer/api/listNotifications",
+            GameType.ZZZ: "https://cg-nap-api.mihoyo.com/nap_cn/cg/gamer/api/listNotifications"
         }[game_type]
