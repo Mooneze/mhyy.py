@@ -26,7 +26,8 @@ _mhyy.Client()_
 
 `get_wallet_data`(self, user: [User](#user))
 
-> 获取指定用户的钱包数据。
+> 获取指定游戏类型的版本号，若未发送过请求，将会强制更新。
+> 若想获取字典类型的所有版本号，请使用 versions 属性。
 >
 > **形参:**
 >
@@ -71,6 +72,10 @@ _class mhyy.GameType_
 `StarRail` = 1
 
 > 云·星穹铁道。
+
+`ZZZ` = 2
+
+> 云·绝区零
 
 ## Notification {#notification}
 

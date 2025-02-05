@@ -6,7 +6,7 @@
 ![Python](https://img.shields.io/pypi/pyversions/mhyy.py?style=flat-square)
 ![STARS](https://img.shields.io/github/stars/GuangChen2333/mhyy.py?style=flat-square)
 
-Python 米哈云游（云·原神、云·星穷铁道）签到功能与相关方法的API
+Python 米哈云游（云·原神、云·星穷铁道、云·绝区零）签到功能与相关方法的API
 
 ## 安装
 
