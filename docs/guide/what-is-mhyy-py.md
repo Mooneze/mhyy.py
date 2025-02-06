@@ -11,3 +11,4 @@ mhyy.py 是一个基于 [httpx](https://github.com/encode/httpx/) 编写的一�
 
 - [云·原神](https://ys.mihoyo.com/cloud/)
 - [云·星穹铁道](https://sr.mihoyo.com/cloud/)
+- [云·绝区零](https://zzz.mihoyo.com/cloud-feat/)

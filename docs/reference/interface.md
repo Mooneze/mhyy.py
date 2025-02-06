@@ -26,8 +26,7 @@ _mhyy.Client()_
 
 `get_wallet_data`(self, user: [User](#user))
 
-> 获取指定游戏类型的版本号，若未发送过请求，将会强制更新。
-> 若想获取字典类型的所有版本号，请使用 versions 属性。
+> 获取指定用户的钱包数据。
 >
 > **形参:**
 >
@@ -51,7 +50,9 @@ type_: Optional[[NotificationType](#notificationtype)] = None, is_sort: Optional
 
 `get_client_version`(self, game_type: [GameType](#gametype))
 
-> 获取指定游戏类型的版本号，若想获取字典类型的所有版本号，请使用 versions 属性。
+> 获取指定游戏类型的版本号。
+> 若未发送过对应游戏类型的网络请求，使用本方法将会更新对应版本版本号。
+> 若想获取字典类型的所有版本号，请使用 versions 属性。
 >
 > **形参:**
 >
