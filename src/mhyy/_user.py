@@ -64,11 +64,16 @@ class User:
 
         # Automatic detection of the game type.
 
-        detected_game_type = {
+        game_type_map = {
             "hk4e_cn": GameType.GenshinImpact,
             "hkrpg_cn": GameType.StarRail,
             "nap_cn": GameType.ZZZ
-        }[ct_map['bi']]
+        }
+
+        if ct_map['bi'] not in game_type_map.keys():
+            raise ComboTokenInvalidError(f"{ct_map['bi']} was not supported.")
+
+        detected_game_type = game_type_map[ct_map['bi']]
 
         if self._game_type is None:
             self._game_type = detected_game_type
