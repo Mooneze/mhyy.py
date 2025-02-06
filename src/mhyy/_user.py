@@ -34,11 +34,10 @@ class User:
             game_type (Optional[GameType]): 游戏类型，若为空则将会从 combo_token 中自动识别。
             channel (Optional[UserChannel]): 用户的游戏渠道。
 
-        Warnings:
-            SyntaxWarning: 当自动识别的游戏类型与用户手动指定的类型不符。
-
         Raises:
             ComboTokenInvalidError: 当 combo_token 不合法。
+            NotImplementedError: 当使用了不支持的平台 / 游戏类型。
+            SyntaxWarning: 当自动识别的游戏类型与用户手动指定的类型不符。
         """
         self._combo_token = combo_token
         self._sys_version = sys_version
