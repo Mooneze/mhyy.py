@@ -6,9 +6,11 @@
 
 - [Client](#client)
 - [GameType](#gametype)
+- [JSONString](#jsonstring)
 - [Notification](#notification)
 - [NotificationStatus](#notificationstatus)
 - [NotificationType](#notificationtype)
+- [TimestampString](#timestampstring)
 - [User](#user)
 - [UserChannel](#userchannel)
 - [UserClientType](#userclienttype)
@@ -16,7 +18,8 @@
 
 ## Client {#client}
 
-_mhyy.Client()_
+_class mhyy.Client_
+()
 
 > 米哈云游客户端。
 
@@ -78,6 +81,21 @@ _class mhyy.GameType_
 
 > 云·绝区零
 
+## JSONString {#jsonstring}
+
+> JSON 格式的字符串。
+> 
+> str 的子类。
+
+_class mhyy.JSONString_
+(str)
+
+`json`()
+
+> 将 JSONString 反序列化为一个 Python 对象。
+> 
+> **返回值:** Any - 一个 Python 对象。  
+
 ## Notification {#notification}
 
 > 通知类。
@@ -110,11 +128,11 @@ _class mhyy.Notification_
 
 > 作用未知，根据名称推测是通知的描述。
 
-`msg`: str
+`msg`: [JSONString](#jsonstring)
 
 > 一个字符串，包含了 json 文本格式的该通知的内容。
 
-`create_at`: str
+`create_at`: [TimestampString](#timestampstring)
 
 > 一个字符串，是秒级的时间戳 (10位)，描述了该通知何时被创建。
 
@@ -179,6 +197,21 @@ _class mhyy.NotificationType_
 > - status (**str**): 成员字符串。
 >
 > **返回值:** [`NotificationType`](#notificationtype) - 枚举成员。
+
+## TimestampString {#timestampstring}
+
+> 时间戳格式的字符串。
+> 
+> str 的子类。
+
+_class mhyy.TimestampString_
+(str)
+
+`to_time`()
+
+> 将 TimestampString 转换成 Datetime。
+> 
+> **返回值:** Any - 对应时间戳的 Datetime。
 
 ## User {#user}
 

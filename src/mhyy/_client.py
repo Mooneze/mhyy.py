@@ -144,6 +144,9 @@ class Client:
 
         Returns:
             该用户的钱包数据。
+
+        Raises:
+            APIRequestError: 当服务端返回值异常时。
         """
         r = self._user_web_get(
             user,
@@ -172,6 +175,9 @@ class Client:
 
         Returns:
             一个列表，包含了指定用户的指定通知。
+
+        Raises:
+            APIRequestError: 当服务端返回值异常时。
         """
 
         # Build params.
