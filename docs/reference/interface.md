@@ -203,7 +203,7 @@ _class mhyy.NotificationType_
 > 
 > str 的子类。
 
-_class mhyy.JSONString_
+_class mhyy.TimestampString_
 (str)
 
 `to_time`()

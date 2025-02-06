@@ -16,7 +16,7 @@ class JSONString(str):
             value (str): JSON 格式的字符串。
 
         Raises:
-            JSONDecodeError: 若字符串不是 JSON 格式。
+            JSONDecodeError: 若 JSON 不合法时。
         """
         instance: str = super().__new__(cls, value)
 
@@ -45,10 +45,21 @@ class TimestampString(str):
 
         Args:
             value (str): 时间戳格式的字符串。
+
+        Raises:
+            ValueError: 当时间戳不合法时。
         """
         instance: str = super().__new__(cls, value)
 
-        instance._time = datetime.fromtimestamp(int(value))
+        try:
+            timestamp = int(value)
+
+            if timestamp < 0:
+                raise ValueError("The timestamp cannot be a negative number.")
+
+            instance._time = datetime.fromtimestamp(timestamp)
+        except ValueError:
+            raise ValueError("Invalid timestamp value.")
 
         return instance
 
