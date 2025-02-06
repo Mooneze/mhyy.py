@@ -33,6 +33,12 @@ class User:
             client_type (UserClientType): 用户的客户端种类。
             game_type (Optional[GameType]): 游戏类型，若为空则将会从 combo_token 中自动识别。
             channel (Optional[UserChannel]): 用户的游戏渠道。
+
+        Warnings:
+            SyntaxWarning: 当自动识别的游戏类型与用户手动指定的类型不符。
+
+        Raises:
+            ComboTokenInvalidError: 当 combo_token 不合法。
         """
         self._combo_token = combo_token
         self._sys_version = sys_version
@@ -43,21 +49,27 @@ class User:
         self._game_type = game_type
         self._channel = channel
 
-        # Automatic detection of the game type.
+        # Validation check.
 
-        try:
-            bi = self._combo_token.split(";bi=")[1]
-        except IndexError:
-            raise ComboTokenInvalidError(
-                "An error occurred in the automatic detection of the game type, "
-                "the 'bi' segment was not found in combo token."
-            )
+        ct_map = {}
+
+        for seg in self._combo_token.split(';'):
+            key = seg.split('=')[0]
+            value = seg.split('=')[1]
+            ct_map[key] = value
+
+        missing_keys = [key for key in ['ai', 'ci', 'oi', 'ct', 'si', 'bi'] if key not in ct_map.keys()]
+
+        if missing_keys:
+            raise ComboTokenInvalidError(f"Combo token missing keys: {', '.join(missing_keys)}")
+
+        # Automatic detection of the game type.
 
         detected_game_type = {
             "hk4e_cn": GameType.GenshinImpact,
             "hkrpg_cn": GameType.StarRail,
             "nap_cn": GameType.ZZZ
-        }[bi]
+        }[ct_map['bi']]
 
         if self._game_type is None:
             self._game_type = detected_game_type
