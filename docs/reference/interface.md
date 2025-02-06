@@ -206,7 +206,7 @@ _class mhyy.NotificationType_
 _class mhyy.JSONString_
 (str)
 
-`to_time    `()
+`to_time`()
 
 > 将 TimestampString 转换成 Datetime。
 > 
