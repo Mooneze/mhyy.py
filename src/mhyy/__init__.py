@@ -13,4 +13,4 @@ from ._types import NotificationType, NotificationStatus
 from ._exceptions import WebRequestError, ComboTokenInvalidError, APIRequestError
 
 # Features
-from ._features import JSONString
+from ._features import JSONString, TimestampString

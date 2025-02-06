@@ -1,5 +1,6 @@
 import json
 from typing import Any
+from datetime import datetime
 
 
 class JSONString(str):
@@ -29,6 +30,34 @@ class JSONString(str):
 
         Returns:
             一个 Python 对象。
-
         """
         return self._json
+
+
+class TimestampString(str):
+    """
+    时间戳格式的字符串
+    """
+
+    def __new__(cls, value: str = ''):
+        """
+        从时间戳格式的字符串创建 TimestampString。
+
+        Args:
+            value (str): 时间戳格式的字符串。
+        """
+        instance: str = super().__new__(cls, value)
+
+        instance._time = datetime.fromtimestamp(int(value))
+
+        return instance
+
+    def to_time(self) -> datetime:
+        """
+        将 TimestampString 转换成 Datetime。
+
+        Returns:
+            对应时间戳的 Datetime。
+
+        """
+        return self._time

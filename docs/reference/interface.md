@@ -10,6 +10,7 @@
 - [Notification](#notification)
 - [NotificationStatus](#notificationstatus)
 - [NotificationType](#notificationtype)
+- [TimestampString](#timestampstring)
 - [User](#user)
 - [UserChannel](#userchannel)
 - [UserClientType](#userclienttype)
@@ -130,7 +131,7 @@ _class mhyy.Notification_
 
 > 一个字符串，包含了 json 文本格式的该通知的内容。
 
-`create_at`: str
+`create_at`: [TimestampString](#timestampstring)
 
 > 一个字符串，是秒级的时间戳 (10位)，描述了该通知何时被创建。
 
@@ -195,6 +196,21 @@ _class mhyy.NotificationType_
 > - status (**str**): 成员字符串。
 >
 > **返回值:** [`NotificationType`](#notificationtype) - 枚举成员。
+
+## TimestampString {#timestampstring}
+
+> 时间戳格式的字符串。
+> 
+> str 的子类。
+
+_class mhyy.JSONString_
+(str)
+
+`to_time    `()
+
+> 将 TimestampString 转换成 Datetime。
+> 
+> **返回值:** Any - 对应时间戳的 Datetime。
 
 ## User {#user}
 

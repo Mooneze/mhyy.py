@@ -1,6 +1,6 @@
 from typing import TypeVar
 from ._types import NotificationType, NotificationStatus
-from ._features import JSONString
+from ._features import JSONString, TimestampString
 
 T = TypeVar("T", bound="Notification")
 
@@ -126,11 +126,11 @@ class Notification:
         return JSONString(self._msg)
 
     @property
-    def create_at(self):
+    def create_at(self) -> TimestampString:
         """
         通知创建时间。
 
         Returns:
             一个字符串，是秒级的时间戳 (10位)，描述了该通知何时被创建。
         """
-        return self._created_at
+        return TimestampString(self._created_at)
